@@ -1,15 +1,17 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+//https://angularfirebase.com/lessons/ionic-4-routing-and-navigation-guide/
+
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'debug',
     pathMatch: 'full'
   },
   {
-    path: 'home',
-    loadChildren: './pages/home/home.module#HomePageModule'
+    path: 'debug',
+    loadChildren: './pages/debug/debug.module#DebugPageModule'
   },
   {
     path: 'list',

@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import {MediaService} from "../../services/music/media/media.service";
 
 @Component({
-    selector: 'app-home',
-    templateUrl: 'home.page.html',
-    styleUrls: ['home.page.scss'],
+    selector: 'app-debug',
+    templateUrl: 'debug.page.html',
+    styleUrls: ['debug.page.scss'],
 })
-export class HomePage {
+export class DebugPage {
 
     constructor(private mediaService: MediaService) {
 
