@@ -11,7 +11,7 @@ import {Mp3} from "../mp3.interface";
 import {Injectable} from "@angular/core";
 import {Subject} from "rxjs/index";
 import {Platform} from "@ionic/angular";
-// import {File} from "@ionic-native/file";
+import {File} from '@ionic-native/file/ngx';
 
 @Injectable({
     providedIn: 'root',
@@ -19,7 +19,7 @@ import {Platform} from "@ionic/angular";
 export class Mp3ListService {
     public mp3Subject = new Subject<Mp3>();
 
-    constructor(private platform: Platform/*, private file: File*/) {
+    constructor(private platform: Platform, private file: File) {
     }
 
     getList() {
@@ -32,34 +32,34 @@ export class Mp3ListService {
     }
     listMp3Files(path: string) {
         let root : string;
-/*        if (this.platform.is('android')) {
+        if (this.platform.is('android')) {
             root = this.file.externalRootDirectory;
         }
         else {
             root = this.file.applicationDirectory;
-            console.log(root);
         }
+        console.log(root);
 
-        this.file.listDir(root, path)
-            .then(result => {
-                for (let item of result) {
-                    if (item.isDirectory == true && item.name != '.' && item.name != '..') {
-                        this.listMp3Files(path + '/' + item.name);
-                    }
-                    else if (item.isFile == true && item.name.substr(item.name.lastIndexOf('.') + 1).toLowerCase() == 'mp3') {
-                        //File found
-                        this.mp3Subject.next(<Mp3>{
-                            name: item.name,
-                            path: item.fullPath
-                        });
-                    }
-                }
-            })
-            .catch (error => {
-                this.mp3Subject.next(<Mp3>{
-                    name: "No such directory",
-                    path: error
-                });
-            });*/
+        // this.file.listDir(root, path)
+        //     .then(result => {
+        //         for (let item of result) {
+        //             if (item.isDirectory == true && item.name != '.' && item.name != '..') {
+        //                 this.listMp3Files(path + '/' + item.name);
+        //             }
+        //             else if (item.isFile == true && item.name.substr(item.name.lastIndexOf('.') + 1).toLowerCase() == 'mp3') {
+        //                 //File found
+        //                 this.mp3Subject.next(<Mp3>{
+        //                     name: item.name,
+        //                     path: item.fullPath
+        //                 });
+        //             }
+        //         }
+        //     })
+        //     .catch (error => {
+        //         this.mp3Subject.next(<Mp3>{
+        //             name: "No such directory",
+        //             path: error
+        //         });
+        //     });
     }
 }

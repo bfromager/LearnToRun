@@ -5,6 +5,7 @@ import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 
 import { DebugPage } from './debug.page';
+
 import {Mp3ListComponent} from "../../services/music/mp3List/mp3List.component";
 
 @NgModule({
@@ -22,6 +23,6 @@ import {Mp3ListComponent} from "../../services/music/mp3List/mp3List.component";
   declarations: [
       DebugPage,
       Mp3ListComponent,
-  ]
+  ],
 })
 export class DebugPageModule {}
