@@ -1,5 +1,5 @@
 import {Subject, Subscription} from "rxjs/index";
-import {Ticker} from "../../ticker/ticker";
+import {Ticker} from "../../../ticker/ticker";
 
 
 export enum MediaStatus {

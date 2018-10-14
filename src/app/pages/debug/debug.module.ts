@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { DebugPage } from './debug.page';
 
 import {Mp3ListComponent} from "../../services/music/mp3List/mp3List.component";
+import {MediaPlayerComponent} from "../../services/music/mediaplayer/mediaPlayer.component";
 
 @NgModule({
   imports: [
@@ -23,6 +24,7 @@ import {Mp3ListComponent} from "../../services/music/mp3List/mp3List.component";
   declarations: [
       DebugPage,
       Mp3ListComponent,
+      MediaPlayerComponent,
   ],
 })
 export class DebugPageModule {}

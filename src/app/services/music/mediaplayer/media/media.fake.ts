@@ -1,5 +1,5 @@
 import {MediaBase, MediaStatus} from "./media.model";
-import {Ticker} from "../../ticker/ticker";
+import {Ticker} from "../../../ticker/ticker";
 
 export class MediaFake extends MediaBase {
     private fakeDelay: Ticker = new Ticker(1000);

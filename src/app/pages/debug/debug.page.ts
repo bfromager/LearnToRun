@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {MediaService} from "../../services/music/media/media.service";
+import {MediaService} from "../../services/music/mediaplayer/media/media.service";
 
 @Component({
     selector: 'app-debug',

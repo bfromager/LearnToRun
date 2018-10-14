@@ -2,6 +2,8 @@ import {Injectable} from '@angular/core';
 import {Platform} from "@ionic/angular";
 import {MediaCordova} from "./media.cordova";
 import {MediaFake} from "./media.fake";
+import {Subject} from "rxjs/index";
+import {MediaStatus} from "./media.model";
 
 @Injectable({
     providedIn: 'root',
@@ -9,6 +11,7 @@ import {MediaFake} from "./media.fake";
     deps: [Platform],
 })
 export class MediaService {
+    public status: Subject<MediaStatus>;
 
     constructor() {
     }
@@ -25,11 +28,11 @@ export class MediaService {
 
 function MediaServiceFactory(platform: Platform) {
     if (platform.is('cordova')) {
-        console.log("cordova");
+        console.log("MediaServiceFactory", "cordova");
         return new MediaCordova ();
     }
     else {
-        console.log("not cordova");
+        console.log("MediaServiceFactory","not cordova");
         return new MediaFake ();
     }
 }
