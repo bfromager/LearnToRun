@@ -38,19 +38,6 @@ export abstract class MediaBase {
     }
 
 
-    // play(file: string) : Promise<any> {
-    //     return new Promise(resolve => {
-    //         this.mediaService.status.subscribe((status) => {
-    //             if (status == MediaStatus.FINISHED /*|| status == MediaStatus.NONE*/) {
-    //                 resolve(null);
-    //             }
-    //         });
-    //         this.mediaService.load(file);
-    //         this.mediaService.play();
-    //     });
-    // }
-
-
     fadeOut() : Promise<any> {
         return new Promise(resolve => {
             this.sub = this.fadeEnd.subscribe(() => {
