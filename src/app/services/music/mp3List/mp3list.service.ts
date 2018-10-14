@@ -13,53 +13,90 @@ import {Subject} from "rxjs/index";
 import {Platform} from "@ionic/angular";
 import {File} from '@ionic-native/file/ngx';
 
+// https://offering.solutions/blog/articles/2018/08/17/using-useclass-usefactory-usevalue-useexisting-with-treeshakable-providers-in-angular/
+
 @Injectable({
     providedIn: 'root',
+    useFactory: Mp3ListServiceFactory,
+    deps: [Platform,File],
 })
 export class Mp3ListService {
-    public mp3Subject = new Subject<Mp3>();
+    public mp3Subject: Subject<Mp3>;
 
-    constructor(private platform: Platform, private file: File) {
+    constructor() {
+    }
+
+    public getList() {
+
+    }
+}
+
+function Mp3ListServiceFactory(platform: Platform, file: File) {
+    if (platform.is('android')) {
+        return new Mp3ListServiceAndroid(file);
+    }
+    else {
+        return new Mp3ListServiceFake();
+    }
+}
+
+class Mp3ListServiceFake {
+    public mp3Subject: Subject<Mp3> = new Subject<Mp3>();
+
+    constructor() {
+
+    }
+
+    getList() {
+        this.mp3Subject.next(<Mp3>{
+            name: "File 1",
+            path: '/toto/tata/tutu/toto/tata/tutu/toto/tata/tutu/'
+        });
+        this.mp3Subject.next(<Mp3>{
+            name: "File 2",
+            path: '/toto/tata/tutu/toto/tata/tutu/toto/tata/tutu/'
+        });
+        this.mp3Subject.next(<Mp3>{
+            name: "File 3",
+            path: '/toto/tata/tutu/toto/tata/tutu/toto/tata/tutu/'
+        });
+    }
+}
+
+class Mp3ListServiceAndroid {
+    public mp3Subject: Subject<Mp3> = new Subject<Mp3>();
+    private root: string;
+
+    constructor(private file: File){
+        this.root = this.file.externalRootDirectory;
     }
 
     getList() {
         this.listMp3Files('Music');
-        // if (this.platform.is('android')) {
-        //     this.listMp3Files('Music');
-        // }
-        // else {
-        // }
     }
     listMp3Files(path: string) {
-        let root : string;
-        if (this.platform.is('android')) {
-            root = this.file.externalRootDirectory;
-        }
-        else {
-            root = this.file.applicationDirectory;
-        }
-        console.log(root);
 
-        // this.file.listDir(root, path)
-        //     .then(result => {
-        //         for (let item of result) {
-        //             if (item.isDirectory == true && item.name != '.' && item.name != '..') {
-        //                 this.listMp3Files(path + '/' + item.name);
-        //             }
-        //             else if (item.isFile == true && item.name.substr(item.name.lastIndexOf('.') + 1).toLowerCase() == 'mp3') {
-        //                 //File found
-        //                 this.mp3Subject.next(<Mp3>{
-        //                     name: item.name,
-        //                     path: item.fullPath
-        //                 });
-        //             }
-        //         }
-        //     })
-        //     .catch (error => {
-        //         this.mp3Subject.next(<Mp3>{
-        //             name: "No such directory",
-        //             path: error
-        //         });
-        //     });
+        this.file.listDir(this.root, path)
+            .then(result => {
+                for (let item of result) {
+                    if (item.isDirectory == true && item.name != '.' && item.name != '..') {
+                        this.listMp3Files(path + '/' + item.name);
+                    }
+                    else if (item.isFile == true && item.name.substr(item.name.lastIndexOf('.') + 1).toLowerCase() == 'mp3') {
+                        //File found
+                        this.mp3Subject.next(<Mp3>{
+                            name: item.name,
+                            path: item.fullPath
+                        });
+                    }
+                }
+            })
+            .catch (error => {
+                this.mp3Subject.next(<Mp3>{
+                    name: "No such directory",
+                    path: error
+                });
+            });
     }
 }
+

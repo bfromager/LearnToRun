@@ -1,7 +1,14 @@
 <ion-list>
-    Mp3ListComponent
-    <button ion-item *ngFor="let item of mp3List">
-        {{item.name}}<br>
-        <i style="font-size: small">{{item.path}}</i>
-    </button>
+    <ion-item *ngFor="let item of mp3List">
+        <ion-label>
+            <h2>{{item.name}}</h2>
+            <i>{{item.path}}</i>
+        </ion-label>
+    </ion-item>
 </ion-list>
+<!--<ion-list>-->
+    <!--<button ion-item *ngFor="let item of mp3List">-->
+        <!--{{item.name}}<br>-->
+        <!--<i style="font-size: small">{{item.path}}</i>-->
+    <!--</button>-->
+<!--</ion-list>-->
