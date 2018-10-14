@@ -4,7 +4,7 @@
 // https://offering.solutions/blog/articles/2018/08/17/using-useclass-usefactory-usevalue-useexisting-with-treeshakable-providers-in-angular/
 
 import {Injectable} from "@angular/core";
-import {Playlist} from "./playlist";
+import {Playlist, PlaylistFactoryService} from "./playlist";
 import {AssetService} from "../../files/asset.service";
 import {Platform} from "@ionic/angular";
 
@@ -22,7 +22,7 @@ import {Platform} from "@ionic/angular";
 @Injectable({
     providedIn: 'root',
     useFactory: PlaylistsServiceFactory,
-    deps: [Platform, AssetService],
+    deps: [Platform, AssetService, PlaylistFactoryService],
 })
 export class PlaylistsService {
 
@@ -31,15 +31,16 @@ export class PlaylistsService {
     }
 }
 
-function PlaylistsServiceFactory (platform: Platform, assetService: AssetService) {
-    return new PlaylistsServiceFake(assetService);
+function PlaylistsServiceFactory (platform: Platform, assetService: AssetService, playlistFactoryService: PlaylistFactoryService) {
+    return new PlaylistsServiceFake(assetService, playlistFactoryService);
 }
 
 class PlaylistsServiceFake{
-    private fakePlaylist: Playlist = new Playlist();
+    private fakePlaylist: Playlist;
     private playlists : Playlist[] = [];
 
-    constructor(private asset: AssetService) {
+    constructor(private asset: AssetService, private playlistFactoryService: PlaylistFactoryService) {
+        this.fakePlaylist = this.playlistFactoryService.create();
 
         // this.fakePlaylist.getList().push(this.asset.getWavePath('course lente.wav'));
         // this.fakePlaylist.getList().push(this.asset.getWavePath('Dimmu.mp3'));

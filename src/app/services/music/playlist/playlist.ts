@@ -1,10 +1,27 @@
-// import {FileService} from "../../files/file.service";
+import {Injectable} from "@angular/core";
+import {FileService} from "../../files/file.service";
 
-abstract class PlaylistBase {
+//todo: delete wrong files
+
+@Injectable({
+    providedIn: 'root',
+})
+export class PlaylistFactoryService {
+
+    constructor(private fileService: FileService) {
+    }
+
+    create(): Playlist{
+        return new Playlist(this.fileService);
+    }
+}
+
+
+export class Playlist {
     protected list: string[] = [];
     protected currentList: string[] = [];
 
-    constructor() {
+    constructor(private fileService: FileService) {
     }
 
     getList() {
@@ -25,7 +42,7 @@ abstract class PlaylistBase {
             }
             let nextFile = this.currentList.shift();
 
-            this.fileExists(nextFile).then((result)=>{
+            this.fileService.exists(nextFile).then((result)=>{
                 console.log('file.exists : ', result);
                 resolve(nextFile);
             }).catch((error)=>{
@@ -40,27 +57,4 @@ abstract class PlaylistBase {
             });
         });
     }
-
-    protected abstract fileExists(file: string): Promise<boolean>;
-
-}
-
-export class Playlist extends PlaylistBase{
-    constructor() {
-        super();
-    }
-
-    protected fileExists(file: string): Promise<boolean> {
-        return new Promise((resolve, reject) => {
-
-            let fileName = file.substring(file.lastIndexOf('/') + 1, file.length);
-
-            if (fileName != "not a file") {
-                resolve(true);
-            } else {
-                reject("File not exists");
-            }
-        });
-    }
-
 }

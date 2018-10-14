@@ -14,7 +14,7 @@ export class AssetService {
         let rootDir = "";
 
         if (this.platform.is('android')) {
-            rootDir = '/android_asset/www/';
+            rootDir = 'file:///android_asset/www/';
         }
 
         rootDir += 'assets/sound/';
