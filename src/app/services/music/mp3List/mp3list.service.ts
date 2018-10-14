@@ -20,15 +20,13 @@ import {File} from '@ionic-native/file/ngx';
     useFactory: Mp3ListServiceFactory,
     deps: [Platform,File],
 })
-export class Mp3ListService {
-    public mp3Subject: Subject<Mp3>;
+export abstract class Mp3ListService {
+    abstract  mp3Subject: Subject<Mp3>;
 
     constructor() {
     }
 
-    public getList() {
-
-    }
+    abstract  getList();
 }
 
 function Mp3ListServiceFactory(platform: Platform, file: File) {

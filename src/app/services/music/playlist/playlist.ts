@@ -1,19 +1,17 @@
 // import {FileService} from "../../files/file.service";
 
-export class Playlist {
-    private list: string[] = [];
-    private currentList: string[] = [];
-    // private file: FileService = new FileService();
+abstract class PlaylistBase {
+    protected list: string[] = [];
+    protected currentList: string[] = [];
 
-    constructor () {
-        // console.log('Playlist constructor');
+    constructor() {
     }
 
-    getList (){
+    getList() {
         return this.list;
     }
 
-    private initPlaylist() {
+    protected initPlaylist() {
         this.currentList = this.list.slice();
     }
 
@@ -26,14 +24,12 @@ export class Playlist {
                 }
             }
             let nextFile = this.currentList.shift();
-            // let filePath = nextFile.substring(0, nextFile.lastIndexOf('/') + 1);
-            let fileName = nextFile.substring(nextFile.lastIndexOf('/') + 1, nextFile.length);
 
-            if (fileName != "not a file"){
-                console.log('file.exists : ', nextFile);
+            this.fileExists(nextFile).then((result)=>{
+                console.log('file.exists : ', result);
                 resolve(nextFile);
-            }else{
-                console.log('file.exists : error ', nextFile);
+            }).catch((error)=>{
+                console.log('file.exists : error ', error);
                 this.getNextFile()
                     .then((aFile:string)=>{
                         resolve(aFile);
@@ -41,21 +37,29 @@ export class Playlist {
                     .catch((error)=>{
                         reject(error);
                     })
-            };
+            });
+        });
+    }
 
-            // this.file.exists(nextFile).then((result)=>{
-            //     console.log('file.exists : ', result);
-            //     resolve(nextFile);
-            // }).catch((error)=>{
-            //     console.log('file.exists : error ', error);
-            //     this.getNextFile()
-            //         .then((aFile:string)=>{
-            //             resolve(aFile);
-            //         })
-            //         .catch((error)=>{
-            //             reject(error);
-            //         })
-            // });
+    protected abstract fileExists(file: string): Promise<boolean>;
+
+}
+
+export class Playlist extends PlaylistBase{
+    constructor() {
+        super();
+    }
+
+    protected fileExists(file: string): Promise<boolean> {
+        return new Promise((resolve, reject) => {
+
+            let fileName = file.substring(file.lastIndexOf('/') + 1, file.length);
+
+            if (fileName != "not a file") {
+                resolve(true);
+            } else {
+                reject("File not exists");
+            }
         });
     }
 

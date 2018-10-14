@@ -10,19 +10,19 @@ import {MediaStatus} from "./media.model";
     useFactory: MediaServiceFactory,
     deps: [Platform],
 })
-export class MediaService {
-    public status: Subject<MediaStatus>;
+export abstract class MediaService {
+    abstract status: Subject<MediaStatus>;
 
     constructor() {
     }
 
-    public load(file : string) {}
-    public play() {}
-    public pause() {}
-    public stop() {}
+    abstract load(file : string);
+    abstract play();
+    abstract pause();
+    abstract stop();
 
-    public fadeOut() : Promise<any> { return new Promise(resolve => {resolve(null)})};
-    public fadeIn() : Promise<any> { return new Promise(resolve => {resolve(null)})}
+    abstract fadeOut() : Promise<any>;
+    abstract fadeIn() : Promise<any>;
 
 }
 

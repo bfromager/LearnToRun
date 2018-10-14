@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 
 import {MediaService} from "./media/media.service";
-import {MediaBase, MediaStatus} from "./media/media.model";
+import {MediaStatus} from "./media/media.model";
 import {Playlist} from "../playlist/playlist";
 
 @Injectable({

@@ -6,6 +6,7 @@
 import {Injectable} from "@angular/core";
 import {Playlist} from "./playlist";
 import {AssetService} from "../../files/asset.service";
+import {Platform} from "@ionic/angular";
 
 // export abstract class PlaylistsBaseService {
 //     protected playlists : Playlist[] = [];
@@ -20,10 +21,23 @@ import {AssetService} from "../../files/asset.service";
 
 @Injectable({
     providedIn: 'root',
+    useFactory: PlaylistsServiceFactory,
+    deps: [Platform, AssetService],
 })
 export class PlaylistsService {
+
+    getPlaylists () {
+        return [];
+    }
+}
+
+function PlaylistsServiceFactory (platform: Platform, assetService: AssetService) {
+    return new PlaylistsServiceFake(assetService);
+}
+
+class PlaylistsServiceFake{
     private fakePlaylist: Playlist = new Playlist();
-    protected playlists : Playlist[] = [];
+    private playlists : Playlist[] = [];
 
     constructor(private asset: AssetService) {
 
@@ -48,7 +62,7 @@ export class PlaylistsService {
     }
 
     getPlaylists () {
-        return this.playlists;
+        return this.playlists.slice();
     }
 }
 
