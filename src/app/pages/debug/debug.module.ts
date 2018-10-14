@@ -8,6 +8,7 @@ import { DebugPage } from './debug.page';
 
 import {Mp3ListComponent} from "../../services/music/mp3List/mp3List.component";
 import {MediaPlayerComponent} from "../../services/music/mediaplayer/mediaPlayer.component";
+import {CountDownComponent} from "../../services/seance/countdown/countDown.component";
 
 @NgModule({
   imports: [
@@ -25,6 +26,7 @@ import {MediaPlayerComponent} from "../../services/music/mediaplayer/mediaPlayer
       DebugPage,
       Mp3ListComponent,
       MediaPlayerComponent,
+      CountDownComponent,
   ],
 })
 export class DebugPageModule {}
