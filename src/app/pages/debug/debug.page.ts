@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {MediaService} from "../../services/music/mediaplayer/media/media.service";
+import {VocalService} from "../../services/seance/alarm/vocal/vocal.service";
 
 @Component({
     selector: 'app-debug',
@@ -8,7 +8,11 @@ import {MediaService} from "../../services/music/mediaplayer/media/media.service
 })
 export class DebugPage {
 
-    constructor(private mediaService: MediaService) {
+    constructor(private vocalService: VocalService) {
 
+    }
+
+    btnTextToSpeech(){
+        this.vocalService.speech("Course lente 10 minutes");
     }
 }
