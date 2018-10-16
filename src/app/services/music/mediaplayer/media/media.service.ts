@@ -26,7 +26,7 @@ export abstract class MediaService {
 
 }
 
-function MediaServiceFactory(platform: Platform) {
+export function MediaServiceFactory(platform: Platform) {
     if (platform.is('cordova')) {
         console.log("MediaServiceFactory", "cordova");
         return new MediaCordova ();
