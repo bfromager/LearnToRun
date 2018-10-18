@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from "@angular/core";
-import {Subscription} from "rxjs/index";
+import {Subject, Subscription} from "rxjs/index";
 import {Ticker} from "../../ticker/ticker";
 
 @Component({
@@ -16,6 +16,7 @@ export class CountDownComponent implements OnInit, OnDestroy {
 
     private tickerSub: Subscription = null;
     private ticker: Ticker;
+    event = new Subject();
 
     constructor() {
     }
@@ -62,6 +63,7 @@ export class CountDownComponent implements OnInit, OnDestroy {
     private onTickerTick(){
         if (--this.timeInSeconds <= 0) {
             this.ticker.stop();
+            this.event.next();
         }
         this.displayTime = this.getSecondsAsDigitalClock(this.timeInSeconds);
     }

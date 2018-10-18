@@ -4,6 +4,9 @@ import {MediaPlayerService} from "../music/mediaplayer/mediaPlayer.service";
 import {AlarmService, AlarmType} from "./alarm/alarm.service";
 import {AssetService} from "../files/asset.service";
 import {PlaylistsService} from "../music/playlist/playlists.service";
+import {Subscription} from "rxjs/index";
+import {Seance} from "./seance";
+import {SeancesService} from "./seances.service";
 
 @Component({
     selector: 'seance-component',
@@ -14,34 +17,73 @@ export class SeanceComponent implements OnInit, OnDestroy {
     // @ViewChild('CountDownComponent') countdown: CountDownComponent;
     @ViewChild(CountDownComponent) countdown: CountDownComponent;
 
-    // private seance: Seance;
+    private seance: Seance;
+    private countDownSub :Subscription;
+    paused = false;
 
-    constructor(private alarm: AlarmService, private asset: AssetService, private mediaPlayer: MediaPlayerService, private playlistsService: PlaylistsService){
+    constructor(
+        private asset: AssetService
+        , private mediaPlayer: MediaPlayerService
+        , private alarm: AlarmService
+        , private playlists: PlaylistsService
+        , private seances: SeancesService
+    ){
     }
 
     ngOnInit() {
-        let playlist = this.playlistsService.getPlaylists()[0];
+        this.seance = this.seances.getSeances()[0];
+
+        this.seance.getNextFraction()
+            .then((fraction) => {
+                alert(fraction.vocalBegin);
+            });
+        this.seance.getNextFraction()
+            .then((fraction) => {
+                alert(fraction.vocalBegin);
+            });
+        this.seance.getNextFraction()
+            .then((fraction) => {
+                alert(fraction.vocalBegin);
+            });
+
+
+        let playlist = this.playlists.getPlaylists()[0];
         this.mediaPlayer.setPlaylist(playlist);
+
+        this.countDownSub = this.countdown.event.subscribe(()=>{this.onCountDownEvent();});
         this.countdown.initCountDown(10);
     }
 
     ngOnDestroy() {
     }
 
+    onCountDownEvent(){
+        alert("stop");
+    }
+
     btnTimerStart(){
         this.mediaPlayer.play();
+        this.countdown.initCountDown(10);
+
+        this.paused = false;
         this.countdown.start();
     }
 
     btnTimerStop(){
         this.countdown.stop();
-        this.countdown.initCountDown(10);
         this.mediaPlayer.stop();
     }
 
     btnTimerPause(){
-        this.countdown.pause();
-        this.mediaPlayer.pause();
+        this.paused = !this.paused;
+
+        if (this.paused) {
+            this.countdown.pause();
+            this.mediaPlayer.pause();
+        } else {
+            this.countdown.start();
+            this.mediaPlayer.play();
+        }
     }
 
     btnAlarm(){
@@ -51,20 +93,4 @@ export class SeanceComponent implements OnInit, OnDestroy {
         this.alarm.trigger({type:AlarmType.VOCAL, msg: '1 minute.'});
     }
 
-/*    btnPlay(){
-        this.mediaPlayerService.play();
-    }
-    btnStop(){
-        this.mediaPlayerService.stop();
-    }
-    btnFadeOut(){
-        this.mediaPlayerService.fadeOut();
-    }
-    btnFadeIn(){
-        this.mediaPlayerService.fadeIn();
-    }
-    btnPause(){
-        this.mediaPlayerService.pause();
-    }
-*/
 }
