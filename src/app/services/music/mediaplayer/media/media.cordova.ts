@@ -1,5 +1,6 @@
 import {Media, MEDIA_ERROR, MEDIA_STATUS, MediaObject} from '@ionic-native/media/ngx';
 import {MediaBase, MediaStatus} from "./media.model";
+import {Subscription} from "rxjs/index";
 
 export class MediaCordova extends MediaBase {
 
@@ -9,6 +10,10 @@ export class MediaCordova extends MediaBase {
     private requestPause = false;
     private mediaStatus: MediaStatus = MediaStatus.NONE;
 
+    private subSuccess : Subscription = null;
+    private subError : Subscription = null;
+    private subStatus : Subscription = null;
+
     constructor() {
         super();
     }
@@ -16,18 +21,25 @@ export class MediaCordova extends MediaBase {
     load(file : string) {
 
         try {
-
             this.mediaObject = this.media.create(file);
-            this.mediaObject.onSuccess.subscribe(() => this.onFinish());
-            this.mediaObject.onError.subscribe((error) => this.onError(error));
-            this.mediaObject.onStatusUpdate.subscribe((status) => this.onUpdateStatus(status)); // fires when file status changes
+            this.subSuccess = this.mediaObject.onSuccess.subscribe(() => this.onFinish());
+            this.subError   = this.mediaObject.onError.subscribe((error) => this.onError(error));
+            this.subStatus  = this.mediaObject.onStatusUpdate.subscribe((status) => this.onUpdateStatus(status)); // fires when file status changes
         }
         catch(e) {
             alert(e);
-            if (this.mediaObject != null)
-                this.mediaObject.release();
-            this.mediaObject = null;
+            this.release();
         }
+    }
+
+    private release(){
+        if (this.subSuccess != null) this.subSuccess.unsubscribe();
+        if (this.subError != null)   this.subError.unsubscribe();
+        if (this.subStatus != null)  this.subStatus.unsubscribe();
+
+        if (this.mediaObject != null)
+            this.mediaObject.release();
+        this.mediaObject = null;
     }
 
 // https://developers.google.com/web/updates/2017/06/play-request-was-interrupted
@@ -66,8 +78,7 @@ export class MediaCordova extends MediaBase {
 
     private onFinish() {
         console.log('Action is successful');
-        this.mediaObject.release();
-        this.mediaObject = null;
+        this.release();
 
         if (this.userStop) {
             this.mediaStatus = MediaStatus.STOPPED;

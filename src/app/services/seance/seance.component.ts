@@ -18,7 +18,7 @@ export class SeanceComponent implements OnInit, OnDestroy {
     @ViewChild(CountDownComponent) countdown: CountDownComponent;
 
     private seance: Seance;
-    private countDownSub :Subscription;
+    private countDownSub :Subscription = null;
     paused = false;
 
     constructor(
@@ -33,45 +33,68 @@ export class SeanceComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.seance = this.seances.getSeances()[0];
 
-        this.seance.getNextFraction()
-            .then((fraction) => {
-                alert(fraction.vocalBegin);
-            });
-        this.seance.getNextFraction()
-            .then((fraction) => {
-                alert(fraction.vocalBegin);
-            });
-        this.seance.getNextFraction()
-            .then((fraction) => {
-                alert(fraction.vocalBegin);
-            });
+        // this.seance.getNextFraction()
+        //     .then((fraction) => {
+        //         alert(fraction.vocalBegin);
+        //     });
+        // this.seance.getNextFraction()
+        //     .then((fraction) => {
+        //         alert(fraction.vocalBegin);
+        //     });
+        // this.seance.getNextFraction()
+        //     .then((fraction) => {
+        //         alert(fraction.vocalBegin);
+        //     });
 
 
         let playlist = this.playlists.getPlaylists()[0];
         this.mediaPlayer.setPlaylist(playlist);
 
+    }
+
+    private initCountDown(){
         this.countDownSub = this.countdown.event.subscribe(()=>{this.onCountDownEvent();});
         this.countdown.initCountDown(10);
     }
-
-    ngOnDestroy() {
-    }
-
-    onCountDownEvent(){
-        alert("stop");
-    }
-
-    btnTimerStart(){
-        this.mediaPlayer.play();
-        this.countdown.initCountDown(10);
-
+    private startCountDown(){
         this.paused = false;
         this.countdown.start();
     }
+    private stopCountDown(){
+        this.countdown.stop();
+        if (this.countDownSub != null) {
+            this.countDownSub.unsubscribe();
+            this.countDownSub = null;
+        }
+    }
+
+
+    private startSeance(){
+        this.mediaPlayer.play();
+
+        this.initCountDown();
+        this.startCountDown();
+    }
+    private stopSeance(){
+        this.stopCountDown();
+        this.mediaPlayer.stop();
+    }
+
+
+    ngOnDestroy() {
+        this.stopSeance();
+    }
+
+    onCountDownEvent(){
+        // alert("stop");
+    }
+
+    btnTimerStart(){
+        this.startSeance();
+    }
 
     btnTimerStop(){
-        this.countdown.stop();
-        this.mediaPlayer.stop();
+        this.stopSeance();
     }
 
     btnTimerPause(){

@@ -1,13 +1,23 @@
 import {MediaBase, MediaStatus} from "./media.model";
 import {Ticker} from "../../../ticker/ticker";
+import {OnDestroy, OnInit} from "@angular/core";
+import {Subscription} from "rxjs/index";
 
-export class MediaFake extends MediaBase {
+export class MediaFake extends MediaBase implements OnInit, OnDestroy {
     private fakeDelay: Ticker = new Ticker(1000);
     private countDown = 0;
+    private tickerSub: Subscription = null;
 
-    constructor() {
+    constructor(){
         super();
-        this.fakeDelay.tick.subscribe(()=>{this.onTick();});
+        this.tickerSub = this.fakeDelay.tick.subscribe(()=>{this.onTick();});
+    }
+
+    ngOnInit() {
+    }
+
+    ngOnDestroy() {
+        this.tickerSub.unsubscribe();
     }
 
     load(file : string) {

@@ -1,5 +1,6 @@
 import {Subject, Subscription} from "rxjs/index";
 import {Ticker} from "../../../ticker/ticker";
+import {OnDestroy} from "@angular/core";
 
 
 export enum MediaStatus {
@@ -11,7 +12,7 @@ export enum MediaStatus {
     FINISHED = "FINISHED",
 }
 
-export abstract class MediaBase {
+export abstract class MediaBase  implements OnDestroy{
     protected userStop = true;
 
     protected maxVolume = 0.2;
@@ -26,6 +27,7 @@ export abstract class MediaBase {
     status = new Subject<MediaStatus>();
     private fadeEnd = new Subject();
     private sub: Subscription;
+    private tickSub: Subscription;
 
     abstract load(file : string);
     abstract play();
@@ -34,9 +36,13 @@ export abstract class MediaBase {
     protected abstract setVolume();
 
     constructor() {
-        this.ticker.tick.subscribe(()=>{this.onFaderTick();});
+        this.tickSub = this.ticker.tick.subscribe(()=>{this.onFaderTick();});
     }
 
+    ngOnDestroy() {
+        this.stop();
+        this.tickSub.unsubscribe();
+    }
 
     fadeOut() : Promise<any> {
         return new Promise(resolve => {

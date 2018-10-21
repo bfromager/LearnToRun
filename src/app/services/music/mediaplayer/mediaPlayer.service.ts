@@ -1,24 +1,31 @@
-import {Injectable} from "@angular/core";
+import {Injectable, OnDestroy} from "@angular/core";
 
 import {MediaService} from "./media/media.service";
 import {MediaStatus} from "./media/media.model";
 import {Playlist} from "../playlist/playlist";
+import {Subscription} from "rxjs/index";
 
 @Injectable({
     providedIn: 'root',
 })
-export class MediaPlayerService {
+export class MediaPlayerService implements OnDestroy{
 
     private fileLoaded = false;
     private curFileName: string = "";
     private mediaStatus: MediaStatus = MediaStatus.NONE;
     private playlist: Playlist;
+    private sub: Subscription = null;
 
     constructor(private mediaService: MediaService) {
-        this.mediaService.status.subscribe((status) => {
+        this.sub = this.mediaService.status.subscribe((status) => {
             this.onPlayStatus(status);
         });
     }
+
+    ngOnDestroy() {
+        this.sub.unsubscribe();
+    }
+
 
     public setPlaylist(playlist: Playlist) {
         this.playlist = playlist;
