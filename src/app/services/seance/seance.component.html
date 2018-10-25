@@ -1,8 +1,11 @@
 <!--<countdown-component #CountDownComponent1></countdown-component>-->
 <!--<countdown-component #CountDownComponent2></countdown-component>-->
 <countdown-component></countdown-component>
-<hr>
-<ion-button color="danger" (click)=btnTimerStart()>Seance  Start</ion-button>
-<ion-button color="danger" (click)=btnTimerPause()>Seance Pause</ion-button>
-<ion-button color="danger" (click)=btnTimerStop()>Seance Stop</ion-button>
-<ion-button color="danger" (click)=btnAlarm()>Alarm</ion-button>
+<ion-row>
+    <ion-col text-center>
+        <ion-button ion-fab (click)=btnTimerStart()  ion-button *ngIf="!started || paused"><ion-icon name="play"></ion-icon></ion-button>
+        <ion-button ion-fab (click)=btnTimerPause() ion-button *ngIf="started && !paused" ><ion-icon name="pause"></ion-icon></ion-button>
+        <ion-button ion-fab (click)=btnTimerStop() ion-button *ngIf="started && paused " ><ion-icon name="square"></ion-icon></ion-button>
+    </ion-col>
+</ion-row>
+

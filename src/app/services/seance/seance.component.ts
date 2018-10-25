@@ -1,12 +1,13 @@
 import {Component, OnDestroy, OnInit, ViewChild} from "@angular/core";
 import {CountDownComponent} from "./countdown/countDown.component";
 import {MediaPlayerService} from "../music/mediaplayer/mediaPlayer.service";
-import {AlarmService, AlarmType} from "./alarm/alarm.service";
-import {AssetService} from "../files/asset.service";
+// import {AlarmService, AlarmType} from "./alarm/alarm.service";
+// import {AssetService} from "../files/asset.service";
 import {PlaylistsService} from "../music/playlist/playlists.service";
 import {Subscription} from "rxjs/index";
 import {Seance} from "./seance";
 import {SeancesService} from "./seances.service";
+import {Fraction} from "./fraction.interface";
 
 @Component({
     selector: 'seance-component',
@@ -20,41 +21,36 @@ export class SeanceComponent implements OnInit, OnDestroy {
     private seance: Seance;
     private countDownSub :Subscription = null;
     paused = false;
+    started = false;
 
     constructor(
-        private asset: AssetService
-        , private mediaPlayer: MediaPlayerService
-        , private alarm: AlarmService
-        , private playlists: PlaylistsService
-        , private seances: SeancesService
+        // private asset: AssetService,
+        private mediaPlayer: MediaPlayerService,
+        // private alarm: AlarmService,
+        private playlists: PlaylistsService,
+        private seances: SeancesService
     ){
     }
 
     ngOnInit() {
         this.seance = this.seances.getSeances()[0];
 
-        // this.seance.getNextFraction()
-        //     .then((fraction) => {
-        //         alert(fraction.vocalBegin);
-        //     });
-        // this.seance.getNextFraction()
-        //     .then((fraction) => {
-        //         alert(fraction.vocalBegin);
-        //     });
-        // this.seance.getNextFraction()
-        //     .then((fraction) => {
-        //         alert(fraction.vocalBegin);
-        //     });
-
-
         let playlist = this.playlists.getPlaylists()[0];
         this.mediaPlayer.setPlaylist(playlist);
 
+        this.countDownSub = this.countdown.event.subscribe(()=>{this.onCountDownEvent();});
     }
 
-    private initCountDown(){
-        this.countDownSub = this.countdown.event.subscribe(()=>{this.onCountDownEvent();});
-        this.countdown.initCountDown(10);
+    ngOnDestroy() {
+        this.stopSeance();
+        if (this.countDownSub != null) {
+            this.countDownSub.unsubscribe();
+            this.countDownSub = null;
+        }
+    }
+
+    private initCountDown(fraction: Fraction){
+        this.countdown.initCountDown(fraction.timeInSecond);
     }
     private startCountDown(){
         this.paused = false;
@@ -62,35 +58,43 @@ export class SeanceComponent implements OnInit, OnDestroy {
     }
     private stopCountDown(){
         this.countdown.stop();
-        if (this.countDownSub != null) {
-            this.countDownSub.unsubscribe();
-            this.countDownSub = null;
-        }
     }
-
 
     private startSeance(){
+        this.started = true;
         this.mediaPlayer.play();
 
-        this.initCountDown();
-        this.startCountDown();
+        this.getNextFraction();
     }
     private stopSeance(){
+        this.started = false;
         this.stopCountDown();
         this.mediaPlayer.stop();
     }
 
-
-    ngOnDestroy() {
-        this.stopSeance();
+    private getNextFraction(){
+        this.seance.getNextFraction()
+            .then((fraction) => {
+                // alert(fraction.timeInSecond);
+                this.initCountDown(fraction);
+                this.startCountDown();
+            })
+            .catch(() => {
+                this.stopSeance()
+            });
     }
 
     onCountDownEvent(){
-        // alert("stop");
+        this.getNextFraction();
     }
 
     btnTimerStart(){
-        this.startSeance();
+        if (!this.started) {
+            this.startSeance();
+        } else {
+            this.startCountDown();
+            this.mediaPlayer.play();
+        }
     }
 
     btnTimerStop(){
@@ -98,22 +102,10 @@ export class SeanceComponent implements OnInit, OnDestroy {
     }
 
     btnTimerPause(){
-        this.paused = !this.paused;
+        this.paused = true;
 
-        if (this.paused) {
-            this.countdown.pause();
-            this.mediaPlayer.pause();
-        } else {
-            this.countdown.start();
-            this.mediaPlayer.play();
-        }
-    }
-
-    btnAlarm(){
-        // this.filePlayer.play(rootDir + 'assets/sound/Alarme.wav').then(()=>{ alert("done"); });
-        this.alarm.trigger({type:AlarmType.WAVE, path: this.asset.getWavePath('Alarme.wav')});
-        this.alarm.trigger({type:AlarmType.VOCAL, msg: 'Course lente.'});
-        this.alarm.trigger({type:AlarmType.VOCAL, msg: '1 minute.'});
+        this.countdown.pause();
+        this.mediaPlayer.pause();
     }
 
 }

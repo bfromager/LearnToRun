@@ -4,6 +4,10 @@ import {WaveService} from "../../services/seance/alarm/wave/wave.service";
 import {AssetService} from "../../services/files/asset.service";
 import {AlarmService, AlarmType} from "../../services/seance/alarm/alarm.service";
 
+// todo : theming
+// https://angularfirebase.com/lessons/css-variables-in-ionic-4/
+// https://www.youtube.com/watch?v=CW7kvEJlNys
+
 @Component({
     selector: 'app-debug',
     templateUrl: 'debug.page.html',

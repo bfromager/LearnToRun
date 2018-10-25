@@ -5,6 +5,7 @@ import {Ticker} from "../../ticker/ticker";
 @Component({
     selector: 'countdown-component',
     templateUrl: 'countDown.component.html',
+    styleUrls : ['countDown.component.scss']
 })
 
 export class CountDownComponent implements OnInit, OnDestroy {
