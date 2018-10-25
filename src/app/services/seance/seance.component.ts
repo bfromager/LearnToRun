@@ -34,6 +34,7 @@ export class SeanceComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.seance = this.seances.getSeances()[0];
+        this.initSeance();
 
         let playlist = this.playlists.getPlaylists()[0];
         this.mediaPlayer.setPlaylist(playlist);
@@ -60,22 +61,32 @@ export class SeanceComponent implements OnInit, OnDestroy {
         this.countdown.stop();
     }
 
+    private initSeance(){
+        this.seance.getFirstFraction()
+            .then((fraction) => {
+                this.initCountDown(fraction);
+            })
+            .catch(() => {
+                this.countdown.initCountDown(0);
+            });
+    }
     private startSeance(){
         this.started = true;
         this.mediaPlayer.play();
 
+        this.seance.init();
         this.getNextFraction();
     }
     private stopSeance(){
         this.started = false;
         this.stopCountDown();
         this.mediaPlayer.stop();
+        this.initSeance();
     }
 
     private getNextFraction(){
         this.seance.getNextFraction()
             .then((fraction) => {
-                // alert(fraction.timeInSecond);
                 this.initCountDown(fraction);
                 this.startCountDown();
             })

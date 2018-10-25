@@ -26,10 +26,10 @@ class SeancesServiceFake{
     constructor(private asset: AssetService, private seanceFactoryService: SeanceFactoryService) {
         this.fakeSeance = this.seanceFactoryService.create();
 
-        this.fakeSeance.getFractions().push({timeInSecond:10, waveBegin: this.asset.getWavePath("Alarme.wave"), vocalBegin: "Course lente. 10 secondes"});
-        this.fakeSeance.getFractions().push({timeInSecond:5, waveBegin: this.asset.getWavePath("Alarme.wave"), vocalBegin: "Marche. 5 secondes"});
-        this.fakeSeance.getFractions().push({timeInSecond:10, waveBegin: this.asset.getWavePath("Alarme.wave"), vocalBegin: "Course lente. 15 secondes"});
-        this.fakeSeance.getFractions().push({timeInSecond:5, waveBegin: this.asset.getWavePath("Alarme.wave"), vocalBegin: "Marche. 5 secondes"});
+        this.fakeSeance.pushFraction({timeInSecond:10, waveBegin: this.asset.getWavePath("Alarme.wave"), vocalBegin: "Course lente. 10 secondes"});
+        this.fakeSeance.pushFraction({timeInSecond:5, waveBegin: this.asset.getWavePath("Alarme.wave"), vocalBegin: "Marche. 5 secondes"});
+        this.fakeSeance.pushFraction({timeInSecond:10, waveBegin: this.asset.getWavePath("Alarme.wave"), vocalBegin: "Course lente. 15 secondes"});
+        this.fakeSeance.pushFraction({timeInSecond:5, waveBegin: this.asset.getWavePath("Alarme.wave"), vocalBegin: "Marche. 5 secondes"});
 
         this.seances.push(this.fakeSeance);
     }

@@ -18,20 +18,35 @@ export class SeanceFactoryService {
 
 export class Seance {
     private fractions: Fraction[] = [];
+    private curFractions: Fraction[] = [];
 
     constructor(){
     }
 
-    getFractions() {
-        return this.fractions;
+    pushFraction(fraction: Fraction){
+        this.fractions.push(fraction);
+    }
+
+    init() {
+        this.curFractions = this.fractions.slice();
     }
 
     public getNextFraction(): Promise<Fraction> {
         return new Promise((resolve, reject) => {
-            if (this.fractions.length == 0) {
+            if (this.curFractions.length == 0) {
                 reject("End of seance");
             } else {
-                resolve(this.fractions.shift());
+                resolve(this.curFractions.shift());
+            }
+        });
+    }
+
+    public getFirstFraction(): Promise<Fraction> {
+        return new Promise((resolve, reject) => {
+            if (this.fractions.length == 0) {
+                reject("Factions is empty");
+            } else {
+                resolve(this.fractions[0]);
             }
         });
     }
