@@ -11,7 +11,7 @@ import {Subscription} from "rxjs/index";
 export class MediaPlayerService implements OnDestroy{
 
     private fileLoaded = false;
-    private curFileName: string = "";
+    // private curFileName: string = "";
     private mediaStatus: MediaStatus = MediaStatus.NONE;
     private playlist: Playlist;
     private sub: Subscription = null;
@@ -29,13 +29,13 @@ export class MediaPlayerService implements OnDestroy{
 
     public setPlaylist(playlist: Playlist) {
         this.playlist = playlist;
-        this.playlist.getNextFile()
-            .then((nextFile) => {
-                this.curFileName = nextFile;
-            })
-            .catch((error)=>{
-                alert(error)
-            });
+        // this.playlist.getNextFile()
+        //     .then((nextFile) => {
+        //         this.curFileName = nextFile;
+        //     })
+        //     .catch((error)=>{
+        //         alert(error)
+        //     });
     }
 
     private load(file: string) {
@@ -43,12 +43,35 @@ export class MediaPlayerService implements OnDestroy{
         this.fileLoaded = true;
     }
 
+    private loadIfNecessary()  : Promise<boolean> {
+        return new Promise((resolve,reject) => {
+            if (!this.fileLoaded) {
+                this.playlist.getNextFile()
+                    .then((nextFile) => {
+                        this.load(nextFile);
+                        resolve(true);
+                    })
+                    .catch((error)=>{
+                        reject(error);
+                    });
+            } else {
+                resolve(true);
+            }
+        });
+    }
+
     play() {
         if (this.mediaStatus == MediaStatus.STARTING || this.mediaStatus == MediaStatus.RUNNING) return;
-        if (this.curFileName == "") return;
+        // if (this.curFileName == "") return;
 
-        if (!this.fileLoaded) this.load(this.curFileName);
-        this.mediaService.play();
+        this.loadIfNecessary()
+            .then(() => {
+                this.mediaService.play();
+            })
+            .catch((error)=>{
+                alert(error);
+                return;
+            });
     }
 
     pause() {
@@ -66,12 +89,13 @@ export class MediaPlayerService implements OnDestroy{
         if (status == MediaStatus.FINISHED /*|| status == MediaStatus.NONE*/) {
             this.fileLoaded = false;
 
-            this.playlist.getNextFile().then((nextFile) => {
-                this.curFileName = nextFile;
-                if (status == MediaStatus.FINISHED) {
-                    this.play();
-                }
-            })
+            // this.playlist.getNextFile().then((nextFile) => {
+            //     this.curFileName = nextFile;
+            //     if (status == MediaStatus.FINISHED) {
+            //         this.play();
+            //     }
+            // })
+            this.play();
         }
     }
 

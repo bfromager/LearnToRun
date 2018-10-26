@@ -1,13 +1,12 @@
 import {Component, OnDestroy, OnInit, ViewChild} from "@angular/core";
 import {CountDownComponent} from "./countdown/countDown.component";
 import {MediaPlayerService} from "../music/mediaplayer/mediaPlayer.service";
-// import {AlarmService, AlarmType} from "./alarm/alarm.service";
-// import {AssetService} from "../files/asset.service";
 import {PlaylistsService} from "../music/playlist/playlists.service";
 import {Subscription} from "rxjs/index";
 import {Seance} from "./seance";
 import {SeancesService} from "./seances.service";
 import {Fraction} from "./fraction.interface";
+import {FractionAlarmService} from "./alarm/fractionAlarm.service";
 
 @Component({
     selector: 'seance-component',
@@ -24,9 +23,8 @@ export class SeanceComponent implements OnInit, OnDestroy {
     started = false;
 
     constructor(
-        // private asset: AssetService,
         private mediaPlayer: MediaPlayerService,
-        // private alarm: AlarmService,
+        private alarm: FractionAlarmService,
         private playlists: PlaylistsService,
         private seances: SeancesService
     ){
@@ -89,13 +87,14 @@ export class SeanceComponent implements OnInit, OnDestroy {
             .then((fraction) => {
                 this.initCountDown(fraction);
                 this.startCountDown();
+                this.alarm.beginAlarm(fraction);
             })
             .catch(() => {
                 this.stopSeance()
             });
     }
 
-    onCountDownEvent(){
+    private onCountDownEvent(){
         this.getNextFraction();
     }
 

@@ -43,7 +43,7 @@ class PlaylistsServiceFake{
         this.fakePlaylist = this.playlistFactoryService.create();
 
         // this.fakePlaylist.getList().push(this.asset.getWavePath('course lente.wav'));
-        // this.fakePlaylist.getList().push(this.asset.getWavePath('Dimmu.mp3'));
+        this.fakePlaylist.getList().push(this.asset.getWavePath('Dimmu.mp3'));
         this.fakePlaylist.getList().push(this.asset.getWavePath('1 minute.wav'));
         this.fakePlaylist.getList().push(this.asset.getWavePath('2 minutes.wav'));
         this.fakePlaylist.getList().push(this.asset.getWavePath('not a file'));
