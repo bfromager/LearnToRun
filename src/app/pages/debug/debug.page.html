@@ -16,9 +16,17 @@
   <ion-button color="danger" (click)=btnAlarm()>Alarm</ion-button>
   <ion-button color="danger" (click)=btnSecondsAsText()>Seconds as Text</ion-button>
   <hr>
-  <mediaPlayer-component></mediaPlayer-component>
+    <ion-button color="success" (click)=btnPlay()>Play</ion-button>
+    <ion-button color="success" (click)=btnStop()>Stop</ion-button>
+    <ion-button color="success" (click)=btnFadeOut()>Fade out</ion-button>
+    <ion-button color="success" (click)=btnFadeIn()>Fade in</ion-button>
+    <ion-button color="success" (click)=btnPause()>Pause</ion-button>
   <hr>
   <seance-component></seance-component>
   <hr>
   <mp3List-component></mp3List-component>
 </ion-content>
+
+<ion-footer>
+    <mediaPlayer-component></mediaPlayer-component>
+</ion-footer>

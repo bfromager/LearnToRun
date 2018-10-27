@@ -17,23 +17,4 @@ export class MediaPlayerComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         this.mediaPlayerService.stop();
     }
-
-    btnPlay(){
-        this.mediaPlayerService.play();
-    }
-    btnStop(){
-        this.mediaPlayerService.stop();
-    }
-    btnFadeOut(){
-        this.mediaPlayerService.fadeOut();
-    }
-    btnFadeIn(){
-        this.mediaPlayerService.fadeIn();
-    }
-    btnPause(){
-        this.mediaPlayerService.pause();
-    }
-
-
-
 }

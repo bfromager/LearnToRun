@@ -4,6 +4,7 @@ import {WaveService} from "../../services/seance/alarm/wave/wave.service";
 import {AssetService} from "../../services/files/asset.service";
 import {AlarmService, AlarmType} from "../../services/seance/alarm/alarm.service";
 import {FractionAlarmService} from "../../services/seance/alarm/fractionAlarm.service";
+import {MediaPlayerService} from "../../services/music/mediaplayer/mediaPlayer.service";
 
 // todo : theming
 // https://angularfirebase.com/lessons/css-variables-in-ionic-4/
@@ -21,7 +22,9 @@ export class DebugPage {
         , private waveService: WaveService
         , private asset: AssetService
         , private alarm: AlarmService
-        , private fractionAlarm: FractionAlarmService ) {
+        , private fractionAlarm: FractionAlarmService
+        , private mediaPlayerService: MediaPlayerService
+    ) {
 
     }
 
@@ -40,6 +43,21 @@ export class DebugPage {
         this.alarm.trigger({type:AlarmType.VOCAL, msg: '1 minute.'});
     }
 
+    btnPlay(){
+        this.mediaPlayerService.play();
+    }
+    btnStop(){
+        this.mediaPlayerService.stop();
+    }
+    btnFadeOut(){
+        this.mediaPlayerService.fadeOut();
+    }
+    btnFadeIn(){
+        this.mediaPlayerService.fadeIn();
+    }
+    btnPause(){
+        this.mediaPlayerService.pause();
+    }
 
     btnSecondsAsText(){
         console.log(10, this.fractionAlarm.getSecondsAsText(10));

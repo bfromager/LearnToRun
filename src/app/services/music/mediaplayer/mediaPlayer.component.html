@@ -1,5 +1,6 @@
-<ion-button color="success" (click)=btnPlay()>Play</ion-button>
-<ion-button color="success" (click)=btnStop()>Stop</ion-button>
-<ion-button color="success" (click)=btnFadeOut()>Fade out</ion-button>
-<ion-button color="success" (click)=btnFadeIn()>Fade in</ion-button>
-<ion-button color="success" (click)=btnPause()>Pause</ion-button>
+<ion-buttons slot="left">
+    <playlistPicker-component></playlistPicker-component>
+    <ion-label>Test</ion-label>
+    <ion-button><ion-icon name="skip-backward"></ion-icon></ion-button>
+    <ion-button><ion-icon name="skip-forward"></ion-icon></ion-button>
+</ion-buttons>
