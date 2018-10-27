@@ -7,6 +7,7 @@ export class PlaylistsServiceFake{
 
     constructor(private asset: AssetService, private playlistFactoryService: PlaylistFactoryService) {
         this.fakePlaylist = this.playlistFactoryService.create();
+        this.fakePlaylist.setName("fake playlist");
 
         // this.fakePlaylist.getList().push(this.asset.getWavePath('course lente.wav'));
         this.fakePlaylist.getList().push(this.asset.getWavePath('1 minute.wav'));

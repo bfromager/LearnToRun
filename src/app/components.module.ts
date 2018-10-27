@@ -1,14 +1,16 @@
 import {IonicModule} from "@ionic/angular";
 import {NgModule} from "@angular/core";
+import {CommonModule} from "@angular/common";
 
 import {Mp3ListComponent} from "./services/music/mp3List/mp3List.component";
 import {MediaPlayerComponent} from "./services/music/mediaplayer/mediaPlayer.component";
 import {CountDownComponent} from "./services/seance/countdown/countDown.component";
 import {SeanceComponent} from "./services/seance/seance.component";
-import {CommonModule} from "@angular/common";
+import {PlaylistsComponent} from "./services/music/playlist/playlists/playlists.component";
 
 @NgModule({
     declarations: [
+        PlaylistsComponent,
         Mp3ListComponent,
         MediaPlayerComponent,
         CountDownComponent,
@@ -19,6 +21,7 @@ import {CommonModule} from "@angular/common";
         IonicModule
     ],
     exports: [
+        PlaylistsComponent,
         Mp3ListComponent,
         MediaPlayerComponent,
         CountDownComponent,

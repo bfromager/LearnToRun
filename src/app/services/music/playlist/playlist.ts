@@ -18,10 +18,18 @@ export class PlaylistFactoryService {
 
 
 export class Playlist {
+    protected name: string;
     protected list: string[] = [];
     protected currentList: string[] = [];
 
     constructor(private fileService: FileService) {
+    }
+
+    getName() {
+        return this.name;
+    }
+    setName(name: string) {
+        this.name = name;
     }
 
     getList() {
