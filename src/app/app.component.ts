@@ -16,6 +16,11 @@ export class AppComponent {
       icon: 'list'
     },
     {
+      title: 'Playlists',
+      url: '/playlists',
+      icon: 'musical-notes'
+    },
+    {
       title: 'Debug',
       url: '/debug',
       icon: 'bug'
