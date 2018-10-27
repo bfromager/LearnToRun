@@ -2,15 +2,17 @@ import {Component, OnDestroy, OnInit} from "@angular/core";
 import {ActionSheetController} from "@ionic/angular";
 import {PlaylistsService} from "../playlists.service";
 import {Playlist} from "../../playlist";
+import {Subject} from "rxjs/index";
 
 @Component({
     selector: 'playlistPicker-component',
     templateUrl: 'playlistPicker.component.html',
 })
-export class PlaylistPicker implements OnInit, OnDestroy {
+export class PlaylistPickerComponent implements OnInit, OnDestroy {
 
     private buttons: any[] = [];
     private playlists : Playlist[] = [];
+    public playlistChange: Subject<Playlist> = new Subject<Playlist>();
 
 
     constructor(private actionSheetController: ActionSheetController, private playlistsService: PlaylistsService) {}
@@ -54,6 +56,7 @@ export class PlaylistPicker implements OnInit, OnDestroy {
 
     private actionSheetHandler(playlist: Playlist) {
         console.log(playlist.getName() + ' actionSheetHandler');
+        this.playlistChange.next(playlist);
     }
 
     ngOnDestroy() {

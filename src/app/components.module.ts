@@ -7,12 +7,12 @@ import {MediaPlayerComponent} from "./services/music/mediaplayer/mediaPlayer.com
 import {CountDownComponent} from "./services/seance/countdown/countDown.component";
 import {SeanceComponent} from "./services/seance/seance.component";
 import {PlaylistsComponent} from "./services/music/playlist/playlists/playlists.component";
-import {PlaylistPicker} from "./services/music/playlist/playlists/picker/playlistPicker.component";
+import {PlaylistPickerComponent} from "./services/music/playlist/playlists/picker/playlistPicker.component";
 
 @NgModule({
     declarations: [
         PlaylistsComponent,
-        PlaylistPicker,
+        PlaylistPickerComponent,
         Mp3ListComponent,
         MediaPlayerComponent,
         CountDownComponent,
@@ -24,7 +24,7 @@ import {PlaylistPicker} from "./services/music/playlist/playlists/picker/playlis
     ],
     exports: [
         PlaylistsComponent,
-        PlaylistPicker,
+        PlaylistPickerComponent,
         Mp3ListComponent,
         MediaPlayerComponent,
         CountDownComponent,

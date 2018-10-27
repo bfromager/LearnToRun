@@ -28,14 +28,15 @@ export class MediaPlayerService implements OnDestroy{
 
 
     public setPlaylist(playlist: Playlist) {
+        if (this.playlist == playlist) return;
+
+        alert("setPlaylist");
         this.playlist = playlist;
-        // this.playlist.getNextFile()
-        //     .then((nextFile) => {
-        //         this.curFileName = nextFile;
-        //     })
-        //     .catch((error)=>{
-        //         alert(error)
-        //     });
+        this.playlist.initPlaylist();
+        if (this.mediaStatus == MediaStatus.STARTING || this.mediaStatus == MediaStatus.RUNNING) {
+            this.stop();
+            this.play();
+        }
     }
 
     private load(file: string) {

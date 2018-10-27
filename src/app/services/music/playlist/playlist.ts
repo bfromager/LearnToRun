@@ -36,7 +36,7 @@ export class Playlist {
         return this.list;
     }
 
-    protected initPlaylist() {
+    initPlaylist() {
         this.currentList = this.list.slice();
     }
 
