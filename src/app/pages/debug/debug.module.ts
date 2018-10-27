@@ -5,17 +5,15 @@ import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 
 import { DebugPage } from './debug.page';
+import {ComponentsModule} from "../../components.module";
 
-import {Mp3ListComponent} from "../../services/music/mp3List/mp3List.component";
-import {MediaPlayerComponent} from "../../services/music/mediaplayer/mediaPlayer.component";
-import {CountDownComponent} from "../../services/seance/countdown/countDown.component";
-import {SeanceComponent} from "../../services/seance/seance.component";
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    ComponentsModule,
     RouterModule.forChild([
       {
         path: '',
@@ -25,10 +23,6 @@ import {SeanceComponent} from "../../services/seance/seance.component";
   ],
   declarations: [
       DebugPage,
-      Mp3ListComponent,
-      MediaPlayerComponent,
-      CountDownComponent,
-      SeanceComponent,
   ],
 })
 export class DebugPageModule {}

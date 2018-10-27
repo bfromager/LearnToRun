@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit, ViewChild} from "@angular/core";
 import {CountDownComponent} from "./countdown/countDown.component";
 import {MediaPlayerService} from "../music/mediaplayer/mediaPlayer.service";
-import {PlaylistsService} from "../music/playlist/playlists.service";
+import {PlaylistsService} from "../music/playlist/playlists/playlists.service";
 import {Subscription} from "rxjs/index";
 import {Seance} from "./seance";
 import {SeancesService} from "./seances.service";

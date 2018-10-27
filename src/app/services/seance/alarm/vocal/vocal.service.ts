@@ -16,7 +16,7 @@ export abstract class VocalService {
 
 function VocalServiceFactory(platform: Platform /*, textToSpeech: TextToSpeech*/) {
     if (platform.is('cordova')
-        && (platform.is('android') || this.platform.is('ios') || this.platform.is('windows'))
+        && (platform.is('android') || platform.is('ios'))
     ) {
         let textToSpeech = new TextToSpeech();
         return new VocalServiceTTS(textToSpeech);

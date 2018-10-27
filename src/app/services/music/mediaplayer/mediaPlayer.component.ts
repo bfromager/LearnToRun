@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from "@angular/core";
 import {MediaPlayerService} from "./mediaPlayer.service";
-import {PlaylistsService} from "../playlist/playlists.service";
+import {PlaylistsService} from "../playlist/playlists/playlists.service";
 @Component({
     selector: 'mediaPlayer-component',
     templateUrl: 'mediaPlayer.component.html',

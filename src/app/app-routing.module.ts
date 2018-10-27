@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-//https://angularfirebase.com/lessons/ionic-4-routing-and-navigation-guide/
+// https://angularfirebase.com/lessons/ionic-4-routing-and-navigation-guide/
+// https://forum.ionicframework.com/t/ionic-4-pass-data-between-pages/139601/6
 
 const routes: Routes = [
   {
