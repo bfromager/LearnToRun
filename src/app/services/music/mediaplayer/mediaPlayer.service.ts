@@ -11,10 +11,12 @@ import {Subscription} from "rxjs/index";
 export class MediaPlayerService implements OnDestroy{
 
     private fileLoaded = false;
+    private changePlaylist = false;
     // private curFileName: string = "";
     private mediaStatus: MediaStatus = MediaStatus.NONE;
     private playlist: Playlist;
     private sub: Subscription = null;
+
 
     constructor(private mediaService: MediaService) {
         this.sub = this.mediaService.status.subscribe((status) => {
@@ -30,12 +32,11 @@ export class MediaPlayerService implements OnDestroy{
     public setPlaylist(playlist: Playlist) {
         if (this.playlist == playlist) return;
 
-        alert("setPlaylist");
         this.playlist = playlist;
         this.playlist.initPlaylist();
         if (this.mediaStatus == MediaStatus.STARTING || this.mediaStatus == MediaStatus.RUNNING) {
+            this.changePlaylist = true;
             this.stop();
-            this.play();
         }
     }
 
@@ -82,6 +83,7 @@ export class MediaPlayerService implements OnDestroy{
     stop() {
         this.fileLoaded = false;
         this.mediaService.stop();
+        this.mediaStatus = MediaStatus.STOPPED;
     }
 
     private onPlayStatus(status: MediaStatus) {
@@ -89,13 +91,11 @@ export class MediaPlayerService implements OnDestroy{
         this.mediaStatus = status;
         if (status == MediaStatus.FINISHED /*|| status == MediaStatus.NONE*/) {
             this.fileLoaded = false;
-
-            // this.playlist.getNextFile().then((nextFile) => {
-            //     this.curFileName = nextFile;
-            //     if (status == MediaStatus.FINISHED) {
-            //         this.play();
-            //     }
-            // })
+            this.play();
+        }
+        if (this.changePlaylist && (status == MediaStatus.STOPPED)) {
+            this.changePlaylist = false;
+            this.fileLoaded = false;
             this.play();
         }
     }

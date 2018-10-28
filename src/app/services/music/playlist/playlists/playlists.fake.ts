@@ -36,6 +36,82 @@ export class PlaylistsServiceFake{
         this.fakePlaylist.getList().push(this.asset.getWavePath('PL2 File 4.wav'));
 
         this.playlists.push(this.fakePlaylist);
+
+        // this.fakePlaylist = this.playlistFactoryService.create();
+        // this.fakePlaylist.setName("playlist cordova 2");
+        // this.playlists.push(this.fakePlaylist);
+        //
+        // this.fakePlaylist = this.playlistFactoryService.create();
+        // this.fakePlaylist.setName("playlist cordova 2");
+        // this.playlists.push(this.fakePlaylist);
+        //
+        // this.fakePlaylist = this.playlistFactoryService.create();
+        // this.fakePlaylist.setName("playlist cordova 2");
+        // this.playlists.push(this.fakePlaylist);
+        //
+        // this.fakePlaylist = this.playlistFactoryService.create();
+        // this.fakePlaylist.setName("playlist cordova 2");
+        // this.playlists.push(this.fakePlaylist);
+        //
+        // this.fakePlaylist = this.playlistFactoryService.create();
+        // this.fakePlaylist.setName("playlist cordova 2");
+        // this.playlists.push(this.fakePlaylist);
+        //
+        // this.fakePlaylist = this.playlistFactoryService.create();
+        // this.fakePlaylist.setName("playlist cordova 2");
+        // this.playlists.push(this.fakePlaylist);
+        //
+        // this.fakePlaylist = this.playlistFactoryService.create();
+        // this.fakePlaylist.setName("playlist cordova 2");
+        // this.playlists.push(this.fakePlaylist);
+        //
+        // this.fakePlaylist = this.playlistFactoryService.create();
+        // this.fakePlaylist.setName("playlist cordova 2");
+        // this.playlists.push(this.fakePlaylist);
+        //
+        // this.fakePlaylist = this.playlistFactoryService.create();
+        // this.fakePlaylist.setName("playlist cordova 2");
+        // this.playlists.push(this.fakePlaylist);
+        //
+        // this.fakePlaylist = this.playlistFactoryService.create();
+        // this.fakePlaylist.setName("playlist cordova 2");
+        // this.playlists.push(this.fakePlaylist);
+        //
+        // this.fakePlaylist = this.playlistFactoryService.create();
+        // this.fakePlaylist.setName("playlist cordova 2");
+        // this.playlists.push(this.fakePlaylist);
+        //
+        // this.fakePlaylist = this.playlistFactoryService.create();
+        // this.fakePlaylist.setName("playlist cordova 2");
+        // this.playlists.push(this.fakePlaylist);
+        //
+        // this.fakePlaylist = this.playlistFactoryService.create();
+        // this.fakePlaylist.setName("playlist cordova 2");
+        // this.playlists.push(this.fakePlaylist);
+        //
+        // this.fakePlaylist = this.playlistFactoryService.create();
+        // this.fakePlaylist.setName("playlist cordova 2");
+        // this.playlists.push(this.fakePlaylist);
+        //
+        // this.fakePlaylist = this.playlistFactoryService.create();
+        // this.fakePlaylist.setName("playlist cordova 2");
+        // this.playlists.push(this.fakePlaylist);
+        //
+        // this.fakePlaylist = this.playlistFactoryService.create();
+        // this.fakePlaylist.setName("playlist cordova 2");
+        // this.playlists.push(this.fakePlaylist);
+        //
+        // this.fakePlaylist = this.playlistFactoryService.create();
+        // this.fakePlaylist.setName("playlist cordova 2");
+        // this.playlists.push(this.fakePlaylist);
+        //
+        // this.fakePlaylist = this.playlistFactoryService.create();
+        // this.fakePlaylist.setName("playlist cordova 2");
+        // this.playlists.push(this.fakePlaylist);
+        //
+        // this.fakePlaylist = this.playlistFactoryService.create();
+        // this.fakePlaylist.setName("playlist cordova 2");
+        // this.playlists.push(this.fakePlaylist);
     }
 
     getPlaylists () {

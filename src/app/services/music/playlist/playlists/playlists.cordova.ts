@@ -7,10 +7,18 @@ export class PlaylistsServiceCordova{
 
     constructor(private asset: AssetService, private playlistFactoryService: PlaylistFactoryService) {
         this.fakePlaylist = this.playlistFactoryService.create();
-        this.fakePlaylist.setName("playlist cordova");
+        this.fakePlaylist.setName("playlist cordova 1");
 
         // this.fakePlaylist.getList().push(this.asset.getWavePath('course lente.wav'));
         this.fakePlaylist.getList().push(this.asset.getWavePath('Dimmu.mp3'));
+        this.fakePlaylist.getList().push(this.asset.getWavePath('1 minute.wav'));
+
+        this.playlists.push(this.fakePlaylist);
+
+        this.fakePlaylist = this.playlistFactoryService.create();
+        this.fakePlaylist.setName("playlist cordova 2");
+
+        // this.fakePlaylist.getList().push(this.asset.getWavePath('course lente.wav'));
         this.fakePlaylist.getList().push(this.asset.getWavePath('1 minute.wav'));
         this.fakePlaylist.getList().push(this.asset.getWavePath('2 minutes.wav'));
         this.fakePlaylist.getList().push(this.asset.getWavePath('not a file'));
