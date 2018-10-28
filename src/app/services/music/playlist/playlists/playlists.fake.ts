@@ -1,120 +1,43 @@
 import {Playlist, PlaylistFactoryService} from "../playlist";
 import {AssetService} from "../../../files/asset.service";
+import {PlaylistsServiceBase} from "./playlists.model";
 
-export class PlaylistsServiceFake{
-    private fakePlaylist: Playlist;
-    private playlists : Playlist[] = [];
+export class PlaylistsServiceFake extends PlaylistsServiceBase{
 
     constructor(private asset: AssetService, private playlistFactoryService: PlaylistFactoryService) {
-        this.fakePlaylist = this.playlistFactoryService.create();
-        this.fakePlaylist.setName("fake playlist 1");
+        super();
 
-        // this.fakePlaylist.getList().push(this.asset.getWavePath('course lente.wav'));
-        this.fakePlaylist.getList().push(this.asset.getWavePath('1 minute.wav'));
-        this.fakePlaylist.getList().push(this.asset.getWavePath('2 minutes.wav'));
-        this.fakePlaylist.getList().push(this.asset.getWavePath('not a file'));
-        this.fakePlaylist.getList().push(this.asset.getWavePath('not a file'));
-        this.fakePlaylist.getList().push(this.asset.getWavePath('not a file'));
-        this.fakePlaylist.getList().push(this.asset.getWavePath('3 minutes.wav'));
-        this.fakePlaylist.getList().push(this.asset.getWavePath('4 minutes.wav'));
-        this.fakePlaylist.getList().push(this.asset.getWavePath('not a file'));
-        // this.fakePlaylist.getList().push(this.asset.getWavePath('5 minutes.wav'));
-        // this.fakePlaylist.getList().push(this.asset.getWavePath('6 minutes.wav'));
-        // this.fakePlaylist.getList().push(this.asset.getWavePath('7 minutes.wav'));
-        // this.fakePlaylist.getList().push(this.asset.getWavePath('8 minutes.wav'));
-        this.fakePlaylist.getList().push(this.asset.getWavePath('not a file'));
-        this.fakePlaylist.getList().push(this.asset.getWavePath('not a file'));
+        let fakePlaylist = this.playlistFactoryService.create();
+        fakePlaylist.setName("fake playlist 1");
 
-        this.playlists.push(this.fakePlaylist);
+        // fakePlaylist.getList().push(this.asset.getWavePath('course lente.wav'));
+        fakePlaylist.getList().push(this.asset.getWavePath('1 minute.wav'));
+        fakePlaylist.getList().push(this.asset.getWavePath('2 minutes.wav'));
+        fakePlaylist.getList().push(this.asset.getWavePath('not a file'));
+        fakePlaylist.getList().push(this.asset.getWavePath('not a file'));
+        fakePlaylist.getList().push(this.asset.getWavePath('not a file'));
+        fakePlaylist.getList().push(this.asset.getWavePath('3 minutes.wav'));
+        fakePlaylist.getList().push(this.asset.getWavePath('4 minutes.wav'));
+        fakePlaylist.getList().push(this.asset.getWavePath('not a file'));
+        // fakePlaylist.getList().push(this.asset.getWavePath('5 minutes.wav'));
+        // fakePlaylist.getList().push(this.asset.getWavePath('6 minutes.wav'));
+        // fakePlaylist.getList().push(this.asset.getWavePath('7 minutes.wav'));
+        // fakePlaylist.getList().push(this.asset.getWavePath('8 minutes.wav'));
+        fakePlaylist.getList().push(this.asset.getWavePath('not a file'));
+        fakePlaylist.getList().push(this.asset.getWavePath('not a file'));
 
-        this.fakePlaylist = this.playlistFactoryService.create();
-        this.fakePlaylist.setName("fake playlist 2");
+        this.playlists.push(fakePlaylist);
 
-        this.fakePlaylist.getList().push(this.asset.getWavePath('PL2 File 1.wav'));
-        this.fakePlaylist.getList().push(this.asset.getWavePath('PL2 File 2.wav'));
-        this.fakePlaylist.getList().push(this.asset.getWavePath('PL2 File 3.wav'));
-        this.fakePlaylist.getList().push(this.asset.getWavePath('PL2 File 4.wav'));
+        fakePlaylist = this.playlistFactoryService.create();
+        fakePlaylist.setName("fake playlist 2");
 
-        this.playlists.push(this.fakePlaylist);
+        // fakePlaylist.getList().push(this.asset.getWavePath('PL2 File 1.wav'));
+        // fakePlaylist.getList().push(this.asset.getWavePath('PL2 File 2.wav'));
+        // fakePlaylist.getList().push(this.asset.getWavePath('PL2 File 3.wav'));
+        // fakePlaylist.getList().push(this.asset.getWavePath('PL2 File 4.wav'));
 
-        // this.fakePlaylist = this.playlistFactoryService.create();
-        // this.fakePlaylist.setName("playlist cordova 2");
-        // this.playlists.push(this.fakePlaylist);
-        //
-        // this.fakePlaylist = this.playlistFactoryService.create();
-        // this.fakePlaylist.setName("playlist cordova 2");
-        // this.playlists.push(this.fakePlaylist);
-        //
-        // this.fakePlaylist = this.playlistFactoryService.create();
-        // this.fakePlaylist.setName("playlist cordova 2");
-        // this.playlists.push(this.fakePlaylist);
-        //
-        // this.fakePlaylist = this.playlistFactoryService.create();
-        // this.fakePlaylist.setName("playlist cordova 2");
-        // this.playlists.push(this.fakePlaylist);
-        //
-        // this.fakePlaylist = this.playlistFactoryService.create();
-        // this.fakePlaylist.setName("playlist cordova 2");
-        // this.playlists.push(this.fakePlaylist);
-        //
-        // this.fakePlaylist = this.playlistFactoryService.create();
-        // this.fakePlaylist.setName("playlist cordova 2");
-        // this.playlists.push(this.fakePlaylist);
-        //
-        // this.fakePlaylist = this.playlistFactoryService.create();
-        // this.fakePlaylist.setName("playlist cordova 2");
-        // this.playlists.push(this.fakePlaylist);
-        //
-        // this.fakePlaylist = this.playlistFactoryService.create();
-        // this.fakePlaylist.setName("playlist cordova 2");
-        // this.playlists.push(this.fakePlaylist);
-        //
-        // this.fakePlaylist = this.playlistFactoryService.create();
-        // this.fakePlaylist.setName("playlist cordova 2");
-        // this.playlists.push(this.fakePlaylist);
-        //
-        // this.fakePlaylist = this.playlistFactoryService.create();
-        // this.fakePlaylist.setName("playlist cordova 2");
-        // this.playlists.push(this.fakePlaylist);
-        //
-        // this.fakePlaylist = this.playlistFactoryService.create();
-        // this.fakePlaylist.setName("playlist cordova 2");
-        // this.playlists.push(this.fakePlaylist);
-        //
-        // this.fakePlaylist = this.playlistFactoryService.create();
-        // this.fakePlaylist.setName("playlist cordova 2");
-        // this.playlists.push(this.fakePlaylist);
-        //
-        // this.fakePlaylist = this.playlistFactoryService.create();
-        // this.fakePlaylist.setName("playlist cordova 2");
-        // this.playlists.push(this.fakePlaylist);
-        //
-        // this.fakePlaylist = this.playlistFactoryService.create();
-        // this.fakePlaylist.setName("playlist cordova 2");
-        // this.playlists.push(this.fakePlaylist);
-        //
-        // this.fakePlaylist = this.playlistFactoryService.create();
-        // this.fakePlaylist.setName("playlist cordova 2");
-        // this.playlists.push(this.fakePlaylist);
-        //
-        // this.fakePlaylist = this.playlistFactoryService.create();
-        // this.fakePlaylist.setName("playlist cordova 2");
-        // this.playlists.push(this.fakePlaylist);
-        //
-        // this.fakePlaylist = this.playlistFactoryService.create();
-        // this.fakePlaylist.setName("playlist cordova 2");
-        // this.playlists.push(this.fakePlaylist);
-        //
-        // this.fakePlaylist = this.playlistFactoryService.create();
-        // this.fakePlaylist.setName("playlist cordova 2");
-        // this.playlists.push(this.fakePlaylist);
-        //
-        // this.fakePlaylist = this.playlistFactoryService.create();
-        // this.fakePlaylist.setName("playlist cordova 2");
-        // this.playlists.push(this.fakePlaylist);
-    }
+        this.playlists.push(fakePlaylist);
 
-    getPlaylists () {
-        return this.playlists.slice();
+        this.editingPlaylist = this.playlists[1];
     }
 }

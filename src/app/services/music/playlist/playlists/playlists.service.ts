@@ -4,7 +4,7 @@
 // https://offering.solutions/blog/articles/2018/08/17/using-useclass-usefactory-usevalue-useexisting-with-treeshakable-providers-in-angular/
 
 import {Injectable} from "@angular/core";
-import {PlaylistFactoryService} from "../playlist";
+import {Playlist, PlaylistFactoryService} from "../playlist";
 import {AssetService} from "../../../files/asset.service";
 import {Platform} from "@ionic/angular";
 import {PlaylistsServiceFake} from "./playlists.fake";
@@ -27,6 +27,11 @@ import {PlaylistsServiceCordova} from "./playlists.cordova";
     deps: [Platform, AssetService, PlaylistFactoryService],
 })
 export class PlaylistsService {
+
+    getEditingPlaylist(): Playlist {
+        return null;
+    }
+    setEditingPlaylist(playlist:Playlist) {}
 
     getPlaylists () {
         return [];

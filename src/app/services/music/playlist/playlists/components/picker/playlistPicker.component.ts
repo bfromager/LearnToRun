@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from "@angular/core";
 import {ActionSheetController} from "@ionic/angular";
-import {PlaylistsService} from "../playlists.service";
-import {Playlist} from "../../playlist";
+import {PlaylistsService} from "../../playlists.service";
+import {Playlist} from "../../../playlist";
 import {Subject} from "rxjs/index";
 
 @Component({

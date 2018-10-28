@@ -31,6 +31,9 @@ export class Playlist {
     setName(name: string) {
         this.name = name;
     }
+    count() {
+        return this.list.length;
+    }
 
     getList() {
         return this.list;

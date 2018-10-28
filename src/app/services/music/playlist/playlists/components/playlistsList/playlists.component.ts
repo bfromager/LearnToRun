@@ -1,6 +1,7 @@
 import {Component, OnDestroy, OnInit} from "@angular/core";
-import {Playlist} from "../playlist";
-import {PlaylistsService} from "./playlists.service";
+import {Playlist} from "../../../playlist";
+import {PlaylistsService} from "../../playlists.service";
+import {Subject} from "rxjs/index";
 @Component({
     selector: 'playlists-component',
     templateUrl: 'playlists.component.html',
@@ -8,6 +9,7 @@ import {PlaylistsService} from "./playlists.service";
 export class PlaylistsComponent implements OnInit, OnDestroy {
 
     private playlists : Playlist[] = [];
+    public playlistClick: Subject<Playlist> = new Subject<Playlist>();
 
     constructor(private playlistsService: PlaylistsService) {
     }
@@ -16,5 +18,9 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
         this.playlists = this.playlistsService.getPlaylists();
     }
     ngOnDestroy() {
+    }
+
+    itemClick(playlist: Playlist){
+        this.playlistClick.next(playlist);
     }
 }

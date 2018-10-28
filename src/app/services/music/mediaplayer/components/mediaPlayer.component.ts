@@ -1,8 +1,8 @@
 import {Component, OnDestroy, OnInit, ViewChild} from "@angular/core";
-import {MediaPlayerService} from "./mediaPlayer.service";
+import {MediaPlayerService} from "../mediaPlayer.service";
 // import {PlaylistsService} from "../playlist/playlists/playlists.service";
-import {PlaylistPickerComponent} from "../playlist/playlists/picker/playlistPicker.component";
-import {Playlist} from "../playlist/playlist";
+import {PlaylistPickerComponent} from "../../playlist/playlists/components/picker/playlistPicker.component";
+import {Playlist} from "../../playlist/playlist";
 @Component({
     selector: 'mediaPlayer-component',
     templateUrl: 'mediaPlayer.component.html',

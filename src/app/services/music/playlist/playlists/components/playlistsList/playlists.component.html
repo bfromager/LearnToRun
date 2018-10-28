@@ -1,0 +1,8 @@
+<ion-list>
+    <ion-item *ngFor="let playlist of playlists" (click)="itemClick(playlist)">
+        <ion-label>
+            <h2>{{playlist.getName()}}</h2>
+            <i>{{playlist.count()}} morceau{{playlist.count()>1 ? "x" : ""}}</i>
+        </ion-label>
+    </ion-item>
+</ion-list>

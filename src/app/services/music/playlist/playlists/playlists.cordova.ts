@@ -1,43 +1,37 @@
 import {Playlist, PlaylistFactoryService} from "../playlist";
 import {AssetService} from "../../../files/asset.service";
+import {PlaylistsServiceBase} from "./playlists.model";
 
-export class PlaylistsServiceCordova{
-    private fakePlaylist: Playlist;
-    private playlists : Playlist[] = [];
-
+export class PlaylistsServiceCordova extends PlaylistsServiceBase{
     constructor(private asset: AssetService, private playlistFactoryService: PlaylistFactoryService) {
-        this.fakePlaylist = this.playlistFactoryService.create();
-        this.fakePlaylist.setName("playlist cordova 1");
+        super();
 
-        // this.fakePlaylist.getList().push(this.asset.getWavePath('course lente.wav'));
-        // this.fakePlaylist.getList().push(this.asset.getWavePath('Dimmu.mp3'));
-        // this.fakePlaylist.getList().push(this.asset.getWavePath('1 minute.wav'));
+        let fakePlaylist = this.playlistFactoryService.create();
+        fakePlaylist.setName("playlist cordova 1");
 
-        this.playlists.push(this.fakePlaylist);
+        this.playlists.push(fakePlaylist);
 
-        this.fakePlaylist = this.playlistFactoryService.create();
-        this.fakePlaylist.setName("playlist cordova 2");
+        fakePlaylist = this.playlistFactoryService.create();
+        fakePlaylist.setName("playlist cordova 2");
 
-        // this.fakePlaylist.getList().push(this.asset.getWavePath('course lente.wav'));
-        this.fakePlaylist.getList().push(this.asset.getWavePath('1 minute.wav'));
-        this.fakePlaylist.getList().push(this.asset.getWavePath('2 minutes.wav'));
-        this.fakePlaylist.getList().push(this.asset.getWavePath('not a file'));
-        this.fakePlaylist.getList().push(this.asset.getWavePath('not a file'));
-        this.fakePlaylist.getList().push(this.asset.getWavePath('not a file'));
-        this.fakePlaylist.getList().push(this.asset.getWavePath('3 minutes.wav'));
-        this.fakePlaylist.getList().push(this.asset.getWavePath('4 minutes.wav'));
-        this.fakePlaylist.getList().push(this.asset.getWavePath('not a file'));
-        // this.fakePlaylist.getList().push(this.asset.getWavePath('5 minutes.wav'));
-        // this.fakePlaylist.getList().push(this.asset.getWavePath('6 minutes.wav'));
-        // this.fakePlaylist.getList().push(this.asset.getWavePath('7 minutes.wav'));
-        // this.fakePlaylist.getList().push(this.asset.getWavePath('8 minutes.wav'));
-        this.fakePlaylist.getList().push(this.asset.getWavePath('not a file'));
-        this.fakePlaylist.getList().push(this.asset.getWavePath('not a file'));
+        // fakePlaylist.getList().push(this.asset.getWavePath('course lente.wav'));
+        fakePlaylist.getList().push(this.asset.getWavePath('1 minute.wav'));
+        fakePlaylist.getList().push(this.asset.getWavePath('2 minutes.wav'));
+        fakePlaylist.getList().push(this.asset.getWavePath('not a file'));
+        fakePlaylist.getList().push(this.asset.getWavePath('not a file'));
+        fakePlaylist.getList().push(this.asset.getWavePath('not a file'));
+        fakePlaylist.getList().push(this.asset.getWavePath('3 minutes.wav'));
+        fakePlaylist.getList().push(this.asset.getWavePath('4 minutes.wav'));
+        fakePlaylist.getList().push(this.asset.getWavePath('not a file'));
+        // fakePlaylist.getList().push(this.asset.getWavePath('5 minutes.wav'));
+        // fakePlaylist.getList().push(this.asset.getWavePath('6 minutes.wav'));
+        // fakePlaylist.getList().push(this.asset.getWavePath('7 minutes.wav'));
+        // fakePlaylist.getList().push(this.asset.getWavePath('8 minutes.wav'));
+        fakePlaylist.getList().push(this.asset.getWavePath('not a file'));
+        fakePlaylist.getList().push(this.asset.getWavePath('not a file'));
 
-        this.playlists.push(this.fakePlaylist);
-    }
+        this.playlists.push(fakePlaylist);
 
-    getPlaylists () {
-        return this.playlists;
+        this.editingPlaylist = this.playlists[0];
     }
 }
