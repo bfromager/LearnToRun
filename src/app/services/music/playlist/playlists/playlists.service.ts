@@ -19,7 +19,7 @@ import {Storage} from "@ionic/storage";
 @Injectable({
     providedIn: 'root',
     useFactory: PlaylistsServiceFactory,
-    deps: [Platform, PlaylistFactoryService],
+    deps: [Platform, PlaylistFactoryService, Storage],
 })
 export abstract class PlaylistsService {
 

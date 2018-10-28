@@ -82,26 +82,26 @@ export class DebugPage {
     }
 
     btnStore() {
-        // this.playlistsService.save();
-        this.storage.set('toto','tutu')
-           .then (()=>{
-                alert('save OK')
-            })
-            .catch(
-                ()=>{
-                    alert('Store ERROR')
-                });
+        this.playlistsService.save();
+        // this.storage.set('toto','tutu')
+        //    .then (()=>{
+        //         alert('save OK')
+        //     })
+        //     .catch(
+        //         ()=>{
+        //             alert('Store ERROR')
+        //         });
     }
 
     btnLoad() {
-        // this.playlistsService.load();
-        this.storage.get('toto')
-            .then ((value)=>{
-                alert(value)
-            })
-            .catch(
-                ()=>{
-                    alert('Load ERROR')
-                });
+        this.playlistsService.load();
+        // this.storage.get('tata')
+        //     .then ((value)=>{
+        //         alert(value)
+        //     })
+        //     .catch(
+        //         ()=>{
+        //             alert('Load ERROR')
+        //         });
     }
 }

@@ -32,7 +32,7 @@ export class Mp3ListComponent implements OnInit {
         this.presentToast(mp3);
         let editingPlaylist : Playlist = this.playlistsService.getEditingPlaylist();
         editingPlaylist.getList().push(mp3);
-
+        this.playlistsService.save();
     }
 
     private presentToast(mp3: Mp3) {
