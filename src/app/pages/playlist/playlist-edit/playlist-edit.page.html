@@ -3,11 +3,12 @@
         <ion-buttons slot="start">
             <ion-back-button></ion-back-button>
         </ion-buttons>
-        <ion-title>Modifier</ion-title>
+        <ion-title>{{playlist.getName()}}</ion-title>
     </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
   playlist-edit
     <ion-button (click)="mp3()">edit</ion-button>
+    <playlist-edit-component></playlist-edit-component>
 </ion-content>

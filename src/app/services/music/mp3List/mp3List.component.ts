@@ -31,7 +31,7 @@ export class Mp3ListComponent implements OnInit {
     btnAdd(mp3: Mp3){
         this.presentToast(mp3);
         let editingPlaylist : Playlist = this.playlistsService.getEditingPlaylist();
-        editingPlaylist.getList().push(mp3.path);
+        editingPlaylist.getList().push(mp3);
 
     }
 
