@@ -1,14 +1,9 @@
-// https://stackoverflow.com/questions/41432388/how-to-inject-service-into-class-not-component
-// https://stackoverflow.com/questions/40536409/getting-dependency-from-injector-manually-inside-a-directive/40537194#40537194
-// https://stackoverflow.com/questions/42396804/how-to-write-a-service-constructor-that-requires-parameters-in-angular-2
-// https://offering.solutions/blog/articles/2018/08/17/using-useclass-usefactory-usevalue-useexisting-with-treeshakable-providers-in-angular/
-
 import {Injectable} from "@angular/core";
 import {Playlist, PlaylistFactoryService} from "../playlist";
-import {AssetService} from "../../../files/asset.service";
 import {Platform} from "@ionic/angular";
 import {PlaylistsServiceFake} from "./playlists.fake";
 import {PlaylistsServiceCordova} from "./playlists.cordova";
+import {Storage} from "@ionic/storage";
 
 // export abstract class PlaylistsBaseService {
 //     protected playlists : Playlist[] = [];
@@ -24,28 +19,28 @@ import {PlaylistsServiceCordova} from "./playlists.cordova";
 @Injectable({
     providedIn: 'root',
     useFactory: PlaylistsServiceFactory,
-    deps: [Platform, AssetService, PlaylistFactoryService],
+    deps: [Platform, PlaylistFactoryService],
 })
-export class PlaylistsService {
+export abstract class PlaylistsService {
 
-    getEditingPlaylist(): Playlist {
-        return null;
-    }
-    setEditingPlaylist(playlist:Playlist) {}
+    abstract getEditingPlaylist(): Playlist;
+    abstract setEditingPlaylist(playlist:Playlist);
 
-    getPlaylists () {
-        return [];
-    }
+    abstract getPlaylists ();
+    abstract load ();
+    abstract save ();
+    abstract saveToString(): string;
+    abstract loadFromString();
 }
 
-function PlaylistsServiceFactory (platform: Platform, assetService: AssetService, playlistFactoryService: PlaylistFactoryService) {
+function PlaylistsServiceFactory (platform: Platform, playlistFactoryService: PlaylistFactoryService, storage: Storage) {
     if (platform.is('cordova')) {
         console.log("PlaylistsServiceFactory", "cordova");
-        return new PlaylistsServiceCordova(assetService, playlistFactoryService);
+        return new PlaylistsServiceCordova(playlistFactoryService, storage);
     }
     else {
         console.log("PlaylistsServiceFactory","not cordova");
-        return new PlaylistsServiceFake(assetService, playlistFactoryService);
+        return new PlaylistsServiceFake(playlistFactoryService);
     }
 }
 

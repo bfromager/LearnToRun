@@ -17,6 +17,10 @@ export class PlaylistFactoryService {
     }
 }
 
+export interface PlaylistInterface {
+    name: string;
+    list: Mp3[];
+}
 
 export class Playlist {
     protected name: string;
@@ -39,6 +43,33 @@ export class Playlist {
     getList() {
         return this.list;
     }
+
+    saveToPlaylistInterface(): PlaylistInterface {
+        let playlistInterface: PlaylistInterface = {
+            name: this.name,
+            list: this.list,
+        }
+        return playlistInterface;
+    }
+    loadFromPlaylistInterface(playlistInterface: PlaylistInterface) {
+        this.name = playlistInterface.name;
+        this.list = playlistInterface.list;
+    }
+
+    // toString(): string {
+    //     let playlistInterface: PlaylistInterface = {
+    //         name: this.name,
+    //         list: this.list,
+    //     }
+    //     // console.log(playlistInterface.name,playlistInterface.list);
+    //     return JSON.stringify (playlistInterface);
+    // }
+    // loadFromString(jsonString: string) {
+    //     let playlistInterface: PlaylistInterface = <PlaylistInterface>JSON.parse(jsonString);
+    //     // console.log(playlistInterface.name,playlistInterface.list);
+    //     this.name = playlistInterface.name;
+    //     this.list = playlistInterface.list;
+    // }
 
     initPlaylist() {
         this.currentList = this.list.slice();
