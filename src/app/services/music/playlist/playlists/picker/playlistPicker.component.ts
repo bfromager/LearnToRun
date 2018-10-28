@@ -7,6 +7,7 @@ import {Subject} from "rxjs/index";
 @Component({
     selector: 'playlistPicker-component',
     templateUrl: 'playlistPicker.component.html',
+    styleUrls: ['playlistPicker.actionsheet.scss']
 })
 export class PlaylistPickerComponent implements OnInit, OnDestroy {
 
@@ -26,7 +27,7 @@ export class PlaylistPickerComponent implements OnInit, OnDestroy {
         this.buttons.push(
         {
             text: 'Aucune',
-            // icon: 'checkbox-outline',
+            // icon: 'checkmark',
             handler: () => {
                 console.log('Aucune clicked');
             }
@@ -36,7 +37,7 @@ export class PlaylistPickerComponent implements OnInit, OnDestroy {
             this.buttons.push(
                 {
                     text: playlist.getName(),
-                    // icon: 'square-outline',
+                    // icon: 'checkmark',
                     handler: () => {
                         this.actionSheetHandler(playlist)
                     }
