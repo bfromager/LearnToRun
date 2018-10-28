@@ -19,7 +19,6 @@ export class MediaCordova extends MediaBase {
     }
 
     load(file : string) {
-
         try {
             this.mediaObject = this.media.create(file);
             this.subSuccess = this.mediaObject.onSuccess.subscribe(() => this.onFinish());

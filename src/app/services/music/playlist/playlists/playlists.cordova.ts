@@ -10,8 +10,8 @@ export class PlaylistsServiceCordova{
         this.fakePlaylist.setName("playlist cordova 1");
 
         // this.fakePlaylist.getList().push(this.asset.getWavePath('course lente.wav'));
-        this.fakePlaylist.getList().push(this.asset.getWavePath('Dimmu.mp3'));
-        this.fakePlaylist.getList().push(this.asset.getWavePath('1 minute.wav'));
+        // this.fakePlaylist.getList().push(this.asset.getWavePath('Dimmu.mp3'));
+        // this.fakePlaylist.getList().push(this.asset.getWavePath('1 minute.wav'));
 
         this.playlists.push(this.fakePlaylist);
 
@@ -38,6 +38,6 @@ export class PlaylistsServiceCordova{
     }
 
     getPlaylists () {
-        return this.playlists.slice();
+        return this.playlists;
     }
 }

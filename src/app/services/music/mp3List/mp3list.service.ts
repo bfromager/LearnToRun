@@ -48,15 +48,18 @@ class Mp3ListServiceFake {
     getList() {
         this.mp3Subject.next(<Mp3>{
             name: "File 1",
-            path: '/toto/tata/tutu/toto/tata/tutu/toto/tata/tutu/'
+            displayPath: '/toto/tata/tutu/toto/tata/tutu/toto/tata/tutu/',
+            path: '/ROOT/toto/tata/tutu/toto/tata/tutu/toto/tata/tutu/'
         });
         this.mp3Subject.next(<Mp3>{
             name: "File 2",
-            path: '/toto/tata/tutu/toto/tata/tutu/toto/tata/tutu/'
+            displayPath: '/toto/tata/tutu/toto/tata/tutu/toto/tata/tutu/',
+            path: '/ROOT/toto/tata/tutu/toto/tata/tutu/toto/tata/tutu/'
         });
         this.mp3Subject.next(<Mp3>{
             name: "File 3",
-            path: '/toto/tata/tutu/toto/tata/tutu/toto/tata/tutu/'
+            displayPath: '/toto/tata/tutu/toto/tata/tutu/toto/tata/tutu/',
+            path: '/ROOT/toto/tata/tutu/toto/tata/tutu/toto/tata/tutu/'
         });
     }
 }
@@ -84,7 +87,8 @@ class Mp3ListServiceAndroid {
                         //File found
                         this.mp3Subject.next(<Mp3>{
                             name: item.name,
-                            path: item.fullPath
+                            displayPath: item.fullPath,
+                            path: this.root + item.fullPath
                         });
                     }
                 }
