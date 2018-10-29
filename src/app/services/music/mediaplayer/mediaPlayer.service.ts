@@ -4,6 +4,7 @@ import {MediaService} from "./media/media.service";
 import {MediaStatus} from "./media/media.model";
 import {Playlist} from "../playlist/playlist";
 import {Subscription} from "rxjs/index";
+import {isNullOrUndefined, isUndefined} from "util";
 
 @Injectable({
     providedIn: 'root',
@@ -14,7 +15,7 @@ export class MediaPlayerService implements OnDestroy{
     private changePlaylist = false;
     // private curFileName: string = "";
     private mediaStatus: MediaStatus = MediaStatus.NONE;
-    private playlist: Playlist;
+    private playlist: Playlist = null;
     private sub: Subscription = null;
 
 
@@ -33,7 +34,10 @@ export class MediaPlayerService implements OnDestroy{
         if (this.playlist == playlist) return;
 
         this.playlist = playlist;
-        this.playlist.initPlaylist();
+        if (this.playlist != null) {
+            this.playlist.initPlaylist();
+        }
+
         if (this.mediaStatus == MediaStatus.STARTING || this.mediaStatus == MediaStatus.RUNNING) {
             this.changePlaylist = true;
             this.stop();
@@ -63,7 +67,7 @@ export class MediaPlayerService implements OnDestroy{
     }
 
     play() {
-        if (this.mediaStatus == MediaStatus.STARTING || this.mediaStatus == MediaStatus.RUNNING) return;
+        if (this.playlist == null || this.mediaStatus == MediaStatus.STARTING || this.mediaStatus == MediaStatus.RUNNING) return;
         // if (this.curFileName == "") return;
 
         this.loadIfNecessary()
@@ -81,7 +85,7 @@ export class MediaPlayerService implements OnDestroy{
     }
 
     stop() {
-        this.fileLoaded = false;
+        // this.fileLoaded = false;
         this.mediaService.stop();
         this.mediaStatus = MediaStatus.STOPPED;
     }
