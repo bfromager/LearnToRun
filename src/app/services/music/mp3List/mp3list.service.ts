@@ -12,13 +12,14 @@ import {Injectable} from "@angular/core";
 import {Subject} from "rxjs/index";
 import {Platform} from "@ionic/angular";
 import {File} from '@ionic-native/file/ngx';
+import {AssetService} from "../../files/asset.service";
 
 // https://offering.solutions/blog/articles/2018/08/17/using-useclass-usefactory-usevalue-useexisting-with-treeshakable-providers-in-angular/
 
 @Injectable({
     providedIn: 'root',
     useFactory: Mp3ListServiceFactory,
-    deps: [Platform,File],
+    deps: [Platform, File, AssetService],
 })
 export abstract class Mp3ListService {
     abstract  mp3Subject: Subject<Mp3>;
@@ -29,37 +30,47 @@ export abstract class Mp3ListService {
     abstract  getList();
 }
 
-function Mp3ListServiceFactory(platform: Platform, file: File) {
+function Mp3ListServiceFactory(platform: Platform, file: File, asset: AssetService) {
     if (platform.is('android')) {
         return new Mp3ListServiceAndroid(file);
     }
     else {
-        return new Mp3ListServiceFake();
+        return new Mp3ListServiceFake(asset);
     }
 }
 
 class Mp3ListServiceFake {
     public mp3Subject: Subject<Mp3> = new Subject<Mp3>();
 
-    constructor() {
+    constructor(private asset: AssetService) {
 
     }
 
     getList() {
         this.mp3Subject.next(<Mp3>{
-            name: "File 1",
-            displayPath: '/toto/tata/tutu/toto/tata/tutu/toto/tata/tutu/',
-            path: '/ROOT/toto/tata/tutu/toto/tata/tutu/toto/tata/tutu/'
+            name: "1 minute",
+            displayPath: this.asset.getWavePath('1 minute.wav'),
+            path: this.asset.getWavePath('1 minute.wav')
         });
         this.mp3Subject.next(<Mp3>{
-            name: "File 2",
-            displayPath: '/toto/tata/tutu/toto/tata/tutu/toto/tata/tutu/',
-            path: '/ROOT/toto/tata/tutu/toto/tata/tutu/toto/tata/tutu/'
+            name: "2 minutes",
+            displayPath: this.asset.getWavePath('2 minutes.wav'),
+            path: this.asset.getWavePath('2 minutes.wav')
         });
         this.mp3Subject.next(<Mp3>{
-            name: "File 3",
-            displayPath: '/toto/tata/tutu/toto/tata/tutu/toto/tata/tutu/',
-            path: '/ROOT/toto/tata/tutu/toto/tata/tutu/toto/tata/tutu/'
+            name: "not a file",
+            displayPath: "not a file",
+            path: "not a file"
+        });
+        this.mp3Subject.next(<Mp3>{
+            name: "3 minutes",
+            displayPath: this.asset.getWavePath('3 minutes.wav'),
+            path: this.asset.getWavePath('3 minutes.wav')
+        });
+        this.mp3Subject.next(<Mp3>{
+            name: "4 minutes",
+            displayPath: this.asset.getWavePath('4 minutes.wav'),
+            path: this.asset.getWavePath('4 minutes.wav')
         });
     }
 }

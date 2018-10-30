@@ -1,47 +1,79 @@
 import {Injectable} from "@angular/core";
-import {Playlist, PlaylistFactoryService} from "../playlist";
-import {Platform} from "@ionic/angular";
-import {PlaylistsServiceFake} from "./playlists.fake";
-import {PlaylistsServiceCordova} from "./playlists.cordova";
+import {Playlist, PlaylistFactoryService, PlaylistInterface} from "../playlist";
 import {Storage} from "@ionic/storage";
-
-// export abstract class PlaylistsBaseService {
-//     protected playlists : Playlist[] = [];
-//
-//     constructor() {
-//     }
-//
-//     getPlaylists () {
-//         return this.playlists;
-//     }
-// }
 
 @Injectable({
     providedIn: 'root',
-    useFactory: PlaylistsServiceFactory,
-    deps: [Platform, PlaylistFactoryService, Storage],
 })
-export abstract class PlaylistsService {
+export class PlaylistsService {
+    protected playlists : Playlist[] = [];
+    protected editingPlaylist: Playlist = null;
 
-    abstract getEditingPlaylist(): Playlist;
-    abstract setEditingPlaylist(playlist:Playlist);
+    constructor(private playlistFactoryService: PlaylistFactoryService, private storage: Storage) {
+        this.load();
+    }
 
-    abstract getPlaylists ();
-    abstract load ();
-    abstract save ();
-    abstract saveToString(): string;
-    abstract loadFromString();
+    getEditingPlaylist(): Playlist {
+        return this.editingPlaylist;
+    }
+    setEditingPlaylist(playlist:Playlist) {
+        this.editingPlaylist = playlist;
+    }
+
+    getPlaylists() {
+        return this.playlists;
+    }
+
+    save() {
+        // if (this.playlists.length == 0) {
+        //     this.storage.remove('playlists')
+        //         .catch(()=>{
+        //             alert('Impossible de sauvegarder les playlists')
+        //         });
+        // } else {
+        this.storage.set('playlists', this.saveToString())
+            .catch(()=>{
+                alert('Impossible de sauvegarder les playlists')
+            });
+        // }
+    };
+
+    load() {
+        this.storage.get('playlists')
+            .then ((jsonStr)=>{
+                if (jsonStr != null) {
+                    alert("Load OK : " + jsonStr );
+                    this.loadFromString(jsonStr);
+                }
+            })
+            .catch(
+                ()=>{
+                    alert('Impossible de charger les playlists')
+                });
+
+        this.editingPlaylist = this.playlists[0];
+    }
+
+    private saveToString(): string {
+        let array = [];
+        this.playlists.forEach((playlist) => {
+            array.push(playlist.saveToPlaylistInterface());
+        });
+        return JSON.stringify(array);
+    }
+
+    private loadFromString(jsonStr: string){
+        let array: PlaylistInterface[] = JSON.parse(jsonStr);
+        this.playlists = [];
+        array.forEach((playlistInterface) => {
+            let playlist = this.playlistFactoryService.create();
+            playlist.loadFromPlaylistInterface(playlistInterface);
+            this.playlists.push(playlist);
+        })
+    }
+
+
 }
 
-function PlaylistsServiceFactory (platform: Platform, playlistFactoryService: PlaylistFactoryService, storage: Storage) {
-    if (platform.is('cordova')) {
-        console.log("PlaylistsServiceFactory", "cordova");
-        return new PlaylistsServiceCordova(playlistFactoryService, storage);
-    }
-    else {
-        console.log("PlaylistsServiceFactory","not cordova");
-        return new PlaylistsServiceFake(playlistFactoryService);
-    }
-}
 
 
