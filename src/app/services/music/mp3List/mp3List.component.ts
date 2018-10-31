@@ -39,7 +39,7 @@ export class Mp3ListComponent implements OnInit {
         this.toastCtrl.create({
             message: mp3.name + ' ajouté',
             duration: 1000,
-            position: 'top'
+            position: 'bottom'
         }).then((toast) => {
                 toast.present();
         });

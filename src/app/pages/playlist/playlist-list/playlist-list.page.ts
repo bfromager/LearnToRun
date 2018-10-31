@@ -15,6 +15,7 @@ import {PlaylistsService} from "../../../services/music/playlist/playlists/playl
 export class PlaylistListPage implements OnInit, OnDestroy {
     @ViewChild(PlaylistsComponent) playlists: PlaylistsComponent;
     private playlistClickSub: Subscription;
+    private playlistCreateSub: Subscription;
 
     constructor(private router: Router, private playlistsService: PlaylistsService) { }
 
@@ -25,9 +26,15 @@ export class PlaylistListPage implements OnInit, OnDestroy {
                 this.router.navigateByUrl('/playlist-edit');
             }
         );
+        this.playlistCreateSub = this.playlists.playlistCreate.subscribe(
+            (playlistName: string) => {
+                this.router.navigateByUrl('/mp3-list');
+            }
+        );
     }
 
     ngOnDestroy() {
         this.playlistClickSub.unsubscribe();
+        this.playlistCreateSub.unsubscribe();
     }
 }

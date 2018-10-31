@@ -24,7 +24,15 @@ export class PlaylistsService {
         return this.playlists;
     }
 
+    add(playlistName: string){
+        let playlist = this.playlistFactoryService.create();
+        playlist.setName(playlistName);
+        this.editingPlaylist = playlist;
+        this.playlists.push(playlist);
+    }
+
     save() {
+        console.log("Playlists saved");
         // if (this.playlists.length == 0) {
         //     this.storage.remove('playlists')
         //         .catch(()=>{
@@ -42,7 +50,7 @@ export class PlaylistsService {
         this.storage.get('playlists')
             .then ((jsonStr)=>{
                 if (jsonStr != null) {
-                    alert("Load OK : " + jsonStr );
+                    console.log("Playlists loaded", jsonStr);
                     this.loadFromString(jsonStr);
                 }
             })
