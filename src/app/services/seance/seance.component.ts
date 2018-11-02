@@ -34,8 +34,8 @@ export class SeanceComponent implements OnInit, OnDestroy {
         this.seance = this.seances.getSeances()[0];
         this.initSeance();
 
-        let playlist = this.playlists.getPlaylists()[0];
-        this.mediaPlayer.setPlaylist(playlist);
+        // let playlist = this.playlists.getPlaylists()[0];
+        // this.mediaPlayer.setPlaylist(playlist);
 
         this.countDownSub = this.countdown.event.subscribe(()=>{this.onCountDownEvent();});
     }

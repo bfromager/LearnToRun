@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from "@angular/core";
 import {Playlist} from "../../../playlist";
 import {PlaylistsService} from "../../playlists.service";
-import {Subject} from "rxjs/index";
+import {Subject, Subscription} from "rxjs/index";
 import {AlertController} from "@ionic/angular";
 @Component({
     selector: 'playlists-component',
@@ -12,14 +12,21 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
     private playlists : Playlist[] = [];
     public playlistClick: Subject<Playlist> = new Subject<Playlist>();
     public playlistCreate: Subject<string> = new Subject<string>();
+    private playlistChangeSub: Subscription;
 
     constructor(private playlistsService: PlaylistsService, private alertController: AlertController) {
     }
 
     ngOnInit() {
         this.playlists = this.playlistsService.getPlaylists();
+        this.playlistChangeSub =  this.playlistsService.playlistsChange.subscribe(
+            (playlists: Playlist[]) => {
+                this.playlists = playlists;
+            }
+        );
     }
     ngOnDestroy() {
+        this.playlistChangeSub.unsubscribe();
     }
 
     itemClick(playlist: Playlist){
@@ -61,7 +68,6 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
     }
 
     private createPlaylist(playlistName) {
-        console.log(playlistName);
         this.playlistsService.add(playlistName);
         this.playlistCreate.next(playlistName);
     }

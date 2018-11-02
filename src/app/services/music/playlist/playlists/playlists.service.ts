@@ -1,13 +1,16 @@
 import {Injectable} from "@angular/core";
 import {Playlist, PlaylistFactoryService, PlaylistInterface} from "../playlist";
 import {Storage} from "@ionic/storage";
+import {Subject} from "rxjs/index";
 
 @Injectable({
     providedIn: 'root',
 })
 export class PlaylistsService {
-    protected playlists : Playlist[] = [];
-    protected editingPlaylist: Playlist = null;
+    private playlists : Playlist[] = [];
+    private editingPlaylist: Playlist = null;
+    public playlistsChange: Subject<Playlist[]> = new Subject<Playlist[]>();
+
 
     constructor(private playlistFactoryService: PlaylistFactoryService, private storage: Storage) {
         this.load();
@@ -21,7 +24,7 @@ export class PlaylistsService {
     }
 
     getPlaylists() {
-        return this.playlists;
+        return this.playlists.slice();
     }
 
     add(playlistName: string){
@@ -29,37 +32,48 @@ export class PlaylistsService {
         playlist.setName(playlistName);
         this.editingPlaylist = playlist;
         this.playlists.push(playlist);
+        this.save();
+        this.playlistsChange.next(this.playlists.slice());
     }
 
-    save() {
-        console.log("Playlists saved");
-        // if (this.playlists.length == 0) {
-        //     this.storage.remove('playlists')
-        //         .catch(()=>{
-        //             alert('Impossible de sauvegarder les playlists')
-        //         });
-        // } else {
-        this.storage.set('playlists', this.saveToString())
-            .catch(()=>{
-                alert('Impossible de sauvegarder les playlists')
-            });
-        // }
+    public save(): Promise<any> {
+        return new Promise((resolve, reject) => {
+            console.log("Playlists saved");
+            // if (this.playlists.length == 0) {
+            //     this.storage.remove('playlists')
+            //         .catch(()=>{
+            //             alert('Impossible de sauvegarder les playlists')
+            //         });
+            // } else {
+            this.storage.set('playlists', this.saveToString())
+                .then(() => {
+                    resolve();
+                })
+                .catch(() => {
+                    reject('Impossible de sauvegarder les playlists')
+                });
+            // }
+        })
     };
 
-    load() {
-        this.storage.get('playlists')
-            .then ((jsonStr)=>{
-                if (jsonStr != null) {
-                    console.log("Playlists loaded", jsonStr);
-                    this.loadFromString(jsonStr);
-                }
-            })
-            .catch(
-                ()=>{
-                    alert('Impossible de charger les playlists')
-                });
+    public load(): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this.storage.get('playlists')
+                .then((jsonStr) => {
+                    if (jsonStr != null) {
+                        console.log("Playlists loaded", jsonStr);
+                        this.loadFromString(jsonStr);
+                        resolve();
+                        this.playlistsChange.next(this.playlists.slice());
+                    }
+                })
+                .catch(
+                    () => {
+                        reject('Impossible de charger les playlists');
+                    });
 
-        this.editingPlaylist = this.playlists[0];
+            this.editingPlaylist = this.playlists[0];
+        })
     }
 
     private saveToString(): string {

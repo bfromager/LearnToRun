@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from "@angular/core";
 import {ActionSheetController} from "@ionic/angular";
 import {PlaylistsService} from "../../playlists.service";
 import {Playlist} from "../../../playlist";
-import {Subject} from "rxjs/index";
+import {Subject, Subscription} from "rxjs/index";
 
 @Component({
     selector: 'playlistPicker-component',
@@ -13,17 +13,29 @@ export class PlaylistPickerComponent implements OnInit, OnDestroy {
 
     private buttons: any[] = [];
     private playlists : Playlist[] = [];
-    public playlistChange: Subject<Playlist> = new Subject<Playlist>();
+    public playlistSelect: Subject<Playlist> = new Subject<Playlist>();
+    private playlistChangeSub: Subscription;
 
 
     constructor(private actionSheetController: ActionSheetController, private playlistsService: PlaylistsService) {}
 
     ngOnInit() {
-        this.playlists = this.playlistsService.getPlaylists();
-        this.populateActionSheet();
+        this.populateActionSheet(this.playlistsService.getPlaylists());
+
+        this.playlistChangeSub =  this.playlistsService.playlistsChange.subscribe(
+            (playlists: Playlist[]) => {
+                this.populateActionSheet(playlists);
+            }
+        );
     }
 
-    private populateActionSheet() {
+    ngOnDestroy() {
+        this.playlistChangeSub.unsubscribe();
+    }
+
+    private populateActionSheet(playlists: Playlist[]) {
+        this.playlists = playlists;
+        this.buttons = [];
         this.buttons.push(
         {
             text: 'Aucune',
@@ -57,10 +69,7 @@ export class PlaylistPickerComponent implements OnInit, OnDestroy {
 
     private actionSheetHandler(playlist: Playlist) {
         console.log(playlist.getName() + ' actionSheetHandler');
-        this.playlistChange.next(playlist);
-    }
-
-    ngOnDestroy() {
+        this.playlistSelect.next(playlist);
     }
 
     showActionSheet() {
