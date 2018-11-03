@@ -25,7 +25,6 @@ export interface PlaylistInterface {
 export class Playlist {
     private name: string;
     private list: Mp3[] = [];
-    // private currentList: Mp3[] = [];
     private currentIndex;
 
     constructor(private fileService: FileService) {
@@ -57,23 +56,7 @@ export class Playlist {
         this.list = playlistInterface.list;
     }
 
-    // toString(): string {
-    //     let playlistInterface: PlaylistInterface = {
-    //         name: this.name,
-    //         list: this.list,
-    //     }
-    //     // console.log(playlistInterface.name,playlistInterface.list);
-    //     return JSON.stringify (playlistInterface);
-    // }
-    // loadFromString(jsonString: string) {
-    //     let playlistInterface: PlaylistInterface = <PlaylistInterface>JSON.parse(jsonString);
-    //     // console.log(playlistInterface.name,playlistInterface.list);
-    //     this.name = playlistInterface.name;
-    //     this.list = playlistInterface.list;
-    // }
-
     initPlaylist() {
-        // this.currentList = this.list.slice();
         this.currentIndex = 0;
     }
 
@@ -101,27 +84,6 @@ export class Playlist {
                         reject(error);
                     })
             });
-            // if (this.currentList.length == 0) {
-            //     this.initPlaylist();
-            //     if (this.currentList.length == 0) {
-            //         reject("Playlist is empty");
-            //     }
-            // }
-            // let nextMp3 = this.currentList.shift();
-            //
-            // this.fileService.exists(nextMp3.path).then((result)=>{
-            //     console.log('file.exists : ', result);
-            //     resolve(nextMp3);
-            // }).catch((error)=>{
-            //     console.log('file.exists : error ', error);
-            //     this.getNextMp3()
-            //         .then((mp3:Mp3)=>{
-            //             resolve(mp3);
-            //         })
-            //         .catch((error)=>{
-            //             reject(error);
-            //         })
-            // });
         });
     }
 }
