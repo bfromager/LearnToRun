@@ -23,9 +23,10 @@ export interface PlaylistInterface {
 }
 
 export class Playlist {
-    protected name: string;
-    protected list: Mp3[] = [];
-    protected currentList: Mp3[] = [];
+    private name: string;
+    private list: Mp3[] = [];
+    // private currentList: Mp3[] = [];
+    private currentIndex;
 
     constructor(private fileService: FileService) {
     }
@@ -72,18 +73,20 @@ export class Playlist {
     // }
 
     initPlaylist() {
-        this.currentList = this.list.slice();
+        // this.currentList = this.list.slice();
+        this.currentIndex = 0;
     }
 
     public getNextMp3(): Promise<Mp3> {
         return new Promise((resolve, reject) => {
-            if (this.currentList.length == 0) {
-                this.initPlaylist();
-                if (this.currentList.length == 0) {
-                    reject("Playlist is empty");
-                }
+            if (this.list.length == 0) {
+                reject("Playlist is empty");
             }
-            let nextMp3 = this.currentList.shift();
+
+            if ((this.currentIndex) >= this.list.length) {
+                this.initPlaylist();
+            }
+            let nextMp3 = this.list[this.currentIndex++];
 
             this.fileService.exists(nextMp3.path).then((result)=>{
                 console.log('file.exists : ', result);
@@ -98,6 +101,27 @@ export class Playlist {
                         reject(error);
                     })
             });
+            // if (this.currentList.length == 0) {
+            //     this.initPlaylist();
+            //     if (this.currentList.length == 0) {
+            //         reject("Playlist is empty");
+            //     }
+            // }
+            // let nextMp3 = this.currentList.shift();
+            //
+            // this.fileService.exists(nextMp3.path).then((result)=>{
+            //     console.log('file.exists : ', result);
+            //     resolve(nextMp3);
+            // }).catch((error)=>{
+            //     console.log('file.exists : error ', error);
+            //     this.getNextMp3()
+            //         .then((mp3:Mp3)=>{
+            //             resolve(mp3);
+            //         })
+            //         .catch((error)=>{
+            //             reject(error);
+            //         })
+            // });
         });
     }
 }
