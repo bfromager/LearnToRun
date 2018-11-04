@@ -29,6 +29,7 @@ export interface PlaylistInterface {
 export class Playlist {
     private name: string;
     private list: Mp3[] = [];
+    private displayList: Mp3[] = [];
     private currentIndex = 0;
 
     constructor(private fileService: FileService) {
@@ -77,34 +78,34 @@ export class Playlist {
 
     initPlaylist() {
         this.currentIndex = 0;
+        this.displayList = this.list.slice();
     }
 
     public getNextMp3(method: NextMethod = NextMethod.Forward): Promise<Mp3> {
         return new Promise((resolve, reject) => {
-            if (this.list.length == 0) {
+            if (this.displayList.length == 0) {
                 reject("Playlist is empty");
             }
 
-            if ((method == NextMethod.Forward) && (this.currentIndex >= this.list.length)) {
-                this.currentIndex = 0;
-            } else
-            if ((method == NextMethod.Backward) && (this.currentIndex < 0)) {
-                this.currentIndex = this.list.length - 1;
-            }
-
-            let nextMp3:Mp3;
-            if (method == NextMethod.Random)
-                nextMp3 = this.list[Math.floor(Math.random() * this.list.length)];
-            else if (method == NextMethod.Backward)
-                nextMp3 = this.list[this.currentIndex--];
-            else
-                nextMp3 = this.list[this.currentIndex++];
+            let nextMp3: Mp3 = this.displayList[this.currentIndex];
 
             this.fileService.exists(nextMp3.path).then((result)=>{
                 console.log('file.exists : ', result);
+
+                if (method == NextMethod.Random)
+                    this.currentIndex = Math.floor(Math.random() * this.displayList.length);
+                else if (method == NextMethod.Backward) {
+                    -- this.currentIndex;
+                    if (this.currentIndex < 0) this.currentIndex = this.displayList.length - 1;
+                }
+                else {
+                    ++this.currentIndex;
+                    if (this.currentIndex >= this.displayList.length) this.currentIndex = 0;
+                }
                 resolve(nextMp3);
             }).catch((error)=>{
                 console.log('file.exists : error ', error);
+                this.displayList.splice(this.currentIndex, 1); // On supprime les fichiers incorrects
                 this.getNextMp3(method)
                     .then((mp3:Mp3)=>{
                         resolve(mp3);
