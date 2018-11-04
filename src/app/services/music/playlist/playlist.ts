@@ -77,7 +77,7 @@ export class Playlist {
     }
 
     initPlaylist() {
-        this.currentIndex = 0;
+        this.currentIndex = -1;
         this.displayList = this.list.slice();
     }
 
@@ -87,25 +87,32 @@ export class Playlist {
                 reject("Playlist is empty");
             }
 
-            let nextMp3: Mp3 = this.displayList[this.currentIndex];
+            let displayIndex=this.currentIndex;
+            if (method == NextMethod.Random)
+                displayIndex = Math.floor(Math.random() * this.displayList.length);
+            else if (method == NextMethod.Backward) {
+                -- displayIndex;
+                if (displayIndex < 0) displayIndex = this.displayList.length - 1;
+            }
+            else {
+                ++displayIndex;
+                if (displayIndex >= this.displayList.length) displayIndex = 0;
+            }
+
+            let nextMp3: Mp3 = this.displayList[displayIndex];
 
             this.fileService.exists(nextMp3.path).then((result)=>{
                 console.log('file.exists : ', result);
 
-                if (method == NextMethod.Random)
-                    this.currentIndex = Math.floor(Math.random() * this.displayList.length);
-                else if (method == NextMethod.Backward) {
-                    -- this.currentIndex;
-                    if (this.currentIndex < 0) this.currentIndex = this.displayList.length - 1;
-                }
-                else {
-                    ++this.currentIndex;
-                    if (this.currentIndex >= this.displayList.length) this.currentIndex = 0;
-                }
+                this.currentIndex = displayIndex;
+
                 resolve(nextMp3);
             }).catch((error)=>{
                 console.log('file.exists : error ', error);
-                this.displayList.splice(this.currentIndex, 1); // On supprime les fichiers incorrects
+                this.displayList.splice(displayIndex, 1); // On supprime les fichiers incorrects
+                if (method == NextMethod.Backward) { // Si backward, on passe au précédent
+                    this.currentIndex = displayIndex;
+                }
                 this.getNextMp3(method)
                     .then((mp3:Mp3)=>{
                         resolve(mp3);
