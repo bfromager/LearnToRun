@@ -69,9 +69,13 @@ export class PlaylistEditComponent implements OnInit, OnDestroy {
         this.playlistAddMp3.next();
     }
 
+    delMp3(index: number) {
+        this.playlist.del(index);
+        this.playlistsService.save();
+    }
+
     reorder(event) {
-        const itemToMove = this.playlist.getList().splice(event.detail.from, 1)[0];
-        this.playlist.getList().splice(event.detail.to, 0, itemToMove);
+        this.playlist.reorder(event.detail.from, event.detail.to);
         this.playlistsService.save();
     }
 }

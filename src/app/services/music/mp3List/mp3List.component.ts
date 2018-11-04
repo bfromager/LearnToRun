@@ -25,13 +25,13 @@ export class Mp3ListComponent implements OnInit {
                 // console.log(mp3.name);
             }
         );
-        this.mp3ListService.getList();
+        this.mp3ListService.updateList();
     }
 
     btnAdd(mp3: Mp3){
         this.presentToast(mp3);
         let editingPlaylist : Playlist = this.playlistsService.getEditingPlaylist();
-        editingPlaylist.getList().push(mp3);
+        editingPlaylist.add(mp3);
         this.playlistsService.save();
     }
 

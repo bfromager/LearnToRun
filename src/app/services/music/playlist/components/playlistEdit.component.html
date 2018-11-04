@@ -1,10 +1,11 @@
 <ion-list>
     <ion-reorder-group (ionItemReorder)="reorder($event)" [disabled]="false">
-        <ion-item *ngFor="let mp3 of playlist.getList()">
+        <ion-item *ngFor="let mp3 of playlist.getList(); let deleted=index">
             <ion-reorder slot="start"></ion-reorder>
             <ion-label>
                 <h2>{{mp3.name}}</h2>
             </ion-label>
+            <ion-button fill="clear" size="large" color="danger" (click)="delMp3(deleted)"><ion-icon name="remove-circle" slot="end"></ion-icon></ion-button>
         </ion-item>
     </ion-reorder-group>
 </ion-list>

@@ -45,8 +45,22 @@ export class Playlist {
     }
 
     getList() {
-        return this.list;
+        return this.list.slice();
     }
+
+    add(mp3: Mp3) {
+        this.list.push(mp3);
+    }
+    del(index: number) {
+        if (index > -1) {
+            this.list.splice(index, 1);
+        }
+    }
+    reorder(from: number, to: number) {
+        const itemToMove = this.list.splice(from, 1)[0];
+        this.list.splice(to, 0, itemToMove);
+    }
+
 
     saveToPlaylistInterface(): PlaylistInterface {
         let playlistInterface: PlaylistInterface = {

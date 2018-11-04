@@ -27,7 +27,7 @@ export abstract class Mp3ListService {
     constructor() {
     }
 
-    abstract  getList();
+    abstract  updateList();
 }
 
 function Mp3ListServiceFactory(platform: Platform, file: File, asset: AssetService) {
@@ -46,7 +46,7 @@ class Mp3ListServiceFake {
 
     }
 
-    getList() {
+    updateList() {
         this.mp3Subject.next(<Mp3>{
             name: "1 minute",
             displayPath: this.asset.getWavePath('1 minute.wav'),
@@ -83,7 +83,7 @@ class Mp3ListServiceAndroid {
         this.root = this.file.externalRootDirectory;
     }
 
-    getList() {
+    updateList() {
         this.listMp3Files('Music');
     }
     listMp3Files(path: string) {
