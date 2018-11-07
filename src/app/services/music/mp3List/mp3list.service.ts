@@ -1,20 +1,18 @@
 // https://forum.ionicframework.com/t/how-do-i-retrieve-and-save-internal-audio-mp3-locations/76932
 // https://stackoverflow.com/questions/34384319/ionic-cordova-get-all-mp3-files-from-sdcard
 
-// https://medium.com/@balramchavan/using-async-await-feature-in-angular-587dd56fdc77
-
 // https://stackoverflow.com/questions/28003362/how-to-get-mp3-info-in-cordova
 // https://github.com/cfjedimaster/Cordova-Examples/tree/master/mp3reader
 // https://www.raymondcamden.com/2015/04/29/working-with-mp3s-id3-and-phonegapcordova/
 
-import {Mp3} from "../mp3.interface";
+import {Mp3} from "../mp3/mp3.interface";
 import {Injectable} from "@angular/core";
 import {Subject} from "rxjs/index";
 import {Platform} from "@ionic/angular";
 import {File} from '@ionic-native/file/ngx';
 import {AssetService} from "../../files/asset.service";
+// import * from "jsmediatags/index"
 
-// https://offering.solutions/blog/articles/2018/08/17/using-useclass-usefactory-usevalue-useexisting-with-treeshakable-providers-in-angular/
 
 @Injectable({
     providedIn: 'root',
@@ -48,30 +46,35 @@ class Mp3ListServiceFake {
 
     updateList() {
         this.mp3Subject.next(<Mp3>{
-            name: "1 minute",
-            displayPath: this.asset.getWavePath('1 minute.wav'),
-            path: this.asset.getWavePath('1 minute.wav')
+            name: "Malène",
+            displayPath: this.asset.getWavePath('07 - Marlène.mp3'),
+            path: this.asset.getWavePath('07 - Marlène.mp3')
         });
-        this.mp3Subject.next(<Mp3>{
-            name: "2 minutes",
-            displayPath: this.asset.getWavePath('2 minutes.wav'),
-            path: this.asset.getWavePath('2 minutes.wav')
-        });
-        this.mp3Subject.next(<Mp3>{
-            name: "not a file",
-            displayPath: "not a file",
-            path: "not a file"
-        });
-        this.mp3Subject.next(<Mp3>{
-            name: "3 minutes",
-            displayPath: this.asset.getWavePath('3 minutes.wav'),
-            path: this.asset.getWavePath('3 minutes.wav')
-        });
-        this.mp3Subject.next(<Mp3>{
-            name: "4 minutes",
-            displayPath: this.asset.getWavePath('4 minutes.wav'),
-            path: this.asset.getWavePath('4 minutes.wav')
-        });
+        // this.mp3Subject.next(<Mp3>{
+        //     name: "1 minute",
+        //     displayPath: this.asset.getWavePath('1 minute.wav'),
+        //     path: this.asset.getWavePath('1 minute.wav')
+        // });
+        // this.mp3Subject.next(<Mp3>{
+        //     name: "2 minutes",
+        //     displayPath: this.asset.getWavePath('2 minutes.wav'),
+        //     path: this.asset.getWavePath('2 minutes.wav')
+        // });
+        // this.mp3Subject.next(<Mp3>{
+        //     name: "not a file",
+        //     displayPath: "not a file",
+        //     path: "not a file"
+        // });
+        // this.mp3Subject.next(<Mp3>{
+        //     name: "3 minutes",
+        //     displayPath: this.asset.getWavePath('3 minutes.wav'),
+        //     path: this.asset.getWavePath('3 minutes.wav')
+        // });
+        // this.mp3Subject.next(<Mp3>{
+        //     name: "4 minutes",
+        //     displayPath: this.asset.getWavePath('4 minutes.wav'),
+        //     path: this.asset.getWavePath('4 minutes.wav')
+        // });
     }
 }
 
@@ -96,10 +99,18 @@ class Mp3ListServiceAndroid {
                     }
                     else if (item.isFile == true && item.name.substr(item.name.lastIndexOf('.') + 1).toLowerCase() == 'mp3') {
                         //File found
+                        // jsmediatags.read(item.fullPath, {
+                        //     onSuccess : (tags) => {
+                        //         console.log("onSuccess", tags)
+                        //     },
+                        //     onError : (error) => {
+                        //         console.log("onError", error)
+                        //     }
+                        // });
                         this.mp3Subject.next(<Mp3>{
                             name: item.name,
+                            path: this.root + item.fullPath,
                             displayPath: item.fullPath,
-                            path: this.root + item.fullPath
                         });
                     }
                 }

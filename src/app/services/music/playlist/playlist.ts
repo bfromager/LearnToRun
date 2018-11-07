@@ -1,11 +1,12 @@
 import {Injectable} from "@angular/core";
 import {FileService} from "../../files/file.service";
-import {Mp3} from "../mp3.interface";
+import {Mp3} from "../mp3/mp3.interface";
 
 export enum NextMethod {
-    Forward = 0,
-    Backward = 1,
+    Next = 0,
+    Previous = 1,
     Random = 2,
+    Current = 3,
 }
 
 @Injectable({
@@ -81,7 +82,7 @@ export class Playlist {
         this.displayList = this.list.slice();
     }
 
-    public getNextMp3(method: NextMethod = NextMethod.Forward): Promise<Mp3> {
+    public getMp3(method: NextMethod = NextMethod.Next): Promise<Mp3> {
         return new Promise((resolve, reject) => {
             if (this.displayList.length == 0) {
                 reject("Playlist is empty");
@@ -90,7 +91,7 @@ export class Playlist {
             let displayIndex=this.currentIndex;
             if (method == NextMethod.Random)
                 displayIndex = Math.floor(Math.random() * this.displayList.length);
-            else if (method == NextMethod.Backward) {
+            else if (method == NextMethod.Previous) {
                 -- displayIndex;
                 if (displayIndex < 0) displayIndex = this.displayList.length - 1;
             }
@@ -104,16 +105,17 @@ export class Playlist {
             this.fileService.exists(nextMp3.path).then((result)=>{
                 console.log('file.exists : ', result);
 
-                this.currentIndex = displayIndex;
+                if ((method != NextMethod.Current))
+                    this.currentIndex = displayIndex;
 
                 resolve(nextMp3);
             }).catch((error)=>{
                 console.log('file.exists : error ', error);
                 this.displayList.splice(displayIndex, 1); // On supprime les fichiers incorrects
-                if (method == NextMethod.Backward) { // Si backward, on passe au précédent
+                if (method == NextMethod.Previous) { // Si previous, on passe au précédent
                     this.currentIndex = displayIndex;
                 }
-                this.getNextMp3(method)
+                this.getMp3(method)
                     .then((mp3:Mp3)=>{
                         resolve(mp3);
                     })

@@ -52,7 +52,7 @@ export class MediaPlayerService implements OnDestroy{
     private loadIfNecessary()  : Promise<boolean> {
         return new Promise((resolve,reject) => {
             if (!this.fileLoaded) {
-                this.playlist.getNextMp3()
+                this.playlist.getMp3()
                     .then((nextMp3) => {
                         this.load(nextMp3.path);
                         resolve(true);

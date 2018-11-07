@@ -38,4 +38,29 @@ export class FileService  {
         });
     }
 
+    public toBuffer(path: string): Promise<any>  {
+        return new Promise((resolve, reject) => {
+            let filePath = path.substring(0, path.lastIndexOf('/') + 1);
+            let fileName = path.substring(path.lastIndexOf('/') + 1, path.length);
+
+            if (this.platform.is('android')) {
+                this.file.readAsArrayBuffer(filePath, fileName)
+                    .then((arrayBuffer) => {
+                        resolve(new Uint8Array(arrayBuffer));
+                    })
+                    .catch((error) => {
+                        // alert(path + " " + error);
+                        reject(error);
+                    });
+            }
+            else {
+                if (fileName !== "not a file") {
+                    resolve(false);
+                }else{
+                    reject("not a file");
+                }
+            }
+
+        });
+    }
 }

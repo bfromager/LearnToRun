@@ -10,9 +10,10 @@
     <ion-item *ngFor="let item of mp3List">
         <ion-label>
             <h2>{{item.name}}</h2>
-            <i>{{item.displayPath}}</i>
+            <i>{{item.artist}}|{{item.album}}</i>
         </ion-label>
         <ion-button fill="clear" size="large" (click)="btnAdd(item)"><ion-icon name="add-circle"></ion-icon></ion-button>
+        <ion-button (click)="btnTag(item)">tag</ion-button>
     </ion-item>
 </ion-list>
 
