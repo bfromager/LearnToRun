@@ -5,7 +5,6 @@ import {Injectable} from "@angular/core";
 import {Mp3} from "./mp3.interface";
 import {FileService} from "../../files/file.service";
 import { parse } from 'id3-parser';
-import { convertFileToBuffer, fetchFileAsBuffer } from 'id3-parser/lib/universal/helpers';
 import {IID3Tag} from "id3-parser/lib/interface";
 
 @Injectable({
@@ -27,6 +26,8 @@ export class Mp3TagService {
                         mp3.title = tags.title;
                         mp3.artist = tags.artist;
                         mp3.album = tags.album;
+                        mp3.genre = tags.genre;
+                        mp3.track = tags.track.toString();
                         // resolve(true);
                     }
                 } else {

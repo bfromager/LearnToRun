@@ -45,12 +45,12 @@ export class Mp3ListComponent implements OnInit {
 
     btnTag(mp3: Mp3){
         this.mp3TagService.tagMp3(mp3);
-        console.log(mp3.name);
+        console.log(mp3.artist + "|" + mp3.album);
     }
 
     private presentToast(mp3: Mp3) {
         this.toastCtrl.create({
-            message: mp3.name + ' ajouté',
+            message: (mp3.title ? mp3.title : mp3.name) + ' ajouté',
             duration: 1000,
             position: 'bottom'
         }).then((toast) => {

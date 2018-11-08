@@ -46,35 +46,29 @@ class Mp3ListServiceFake {
 
     updateList() {
         this.mp3Subject.next(<Mp3>{
-            name: "Malène",
-            displayPath: this.asset.getWavePath('07 - Marlène.mp3'),
+            name: "07 - Marlène.mp3",
             path: this.asset.getWavePath('07 - Marlène.mp3')
         });
-        // this.mp3Subject.next(<Mp3>{
-        //     name: "1 minute",
-        //     displayPath: this.asset.getWavePath('1 minute.wav'),
-        //     path: this.asset.getWavePath('1 minute.wav')
-        // });
-        // this.mp3Subject.next(<Mp3>{
-        //     name: "2 minutes",
-        //     displayPath: this.asset.getWavePath('2 minutes.wav'),
-        //     path: this.asset.getWavePath('2 minutes.wav')
-        // });
-        // this.mp3Subject.next(<Mp3>{
-        //     name: "not a file",
-        //     displayPath: "not a file",
-        //     path: "not a file"
-        // });
-        // this.mp3Subject.next(<Mp3>{
-        //     name: "3 minutes",
-        //     displayPath: this.asset.getWavePath('3 minutes.wav'),
-        //     path: this.asset.getWavePath('3 minutes.wav')
-        // });
-        // this.mp3Subject.next(<Mp3>{
-        //     name: "4 minutes",
-        //     displayPath: this.asset.getWavePath('4 minutes.wav'),
-        //     path: this.asset.getWavePath('4 minutes.wav')
-        // });
+        this.mp3Subject.next(<Mp3>{
+            name: "1 minute",
+            path: this.asset.getWavePath('1 minute.wav')
+        });
+        this.mp3Subject.next(<Mp3>{
+            name: "2 minutes",
+            path: this.asset.getWavePath('2 minutes.wav')
+        });
+        this.mp3Subject.next(<Mp3>{
+            name: "not a file",
+            path: "not a file"
+        });
+        this.mp3Subject.next(<Mp3>{
+            name: "3 minutes",
+            path: this.asset.getWavePath('3 minutes.wav')
+        });
+        this.mp3Subject.next(<Mp3>{
+            name: "4 minutes",
+            path: this.asset.getWavePath('4 minutes.wav')
+        });
     }
 }
 
@@ -110,7 +104,6 @@ class Mp3ListServiceAndroid {
                         this.mp3Subject.next(<Mp3>{
                             name: item.name,
                             path: this.root + item.fullPath,
-                            displayPath: item.fullPath,
                         });
                     }
                 }
