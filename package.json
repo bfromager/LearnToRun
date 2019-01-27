@@ -1,8 +1,8 @@
 {
   "name": "LearnToRun",
   "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "http://ionicframework.com/",
+  "author": "Bastok",
+  "homepage": "http://www.bastok.fr",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

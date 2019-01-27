@@ -12,10 +12,22 @@ import {IID3Tag} from "id3-parser/lib/interface";
 })
 export class Mp3TagService {
 
+    private toBeTagged: Mp3[] = [];
+    private tagging = false;
+
     constructor(private fileService: FileService) {}
 
     tagMp3(mp3: Mp3) {
-        // fetchFileAsBuffer(mp3.path)
+        this.toBeTagged.push(mp3);
+        this.asyncTag();
+    }
+
+    private asyncTag() {
+        if (this.tagging || this.toBeTagged.length == 0) return;
+        this.tagging = true;
+
+        let mp3: Mp3 = this.toBeTagged.shift();
+        // alert("Tagging " + mp3.name);
         this.fileService.toBuffer(mp3.path)
             .then((buffer) => {
                 if (buffer != false) {
@@ -33,9 +45,14 @@ export class Mp3TagService {
                 } else {
                     // resolve(false);
                 }
+                // alert("Tagged "  + mp3.name);
+                this.tagging = false;
+                this.asyncTag();
             })
-            .catch((error) => {
-                // reject(error);
+            .catch(()=> {
+                // alert("Error " + mp3.name);
+                this.tagging = false;
+                this.asyncTag();
             })
     }
 

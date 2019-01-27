@@ -24,7 +24,7 @@ export class Mp3ListComponent implements OnInit {
         this.mp3ListService.mp3Subject.subscribe(
             (mp3: Mp3) => {
                 this.mp3List.push(mp3);
-                // this.mp3TagService.tagMp3(mp3);
+                this.mp3TagService.tagMp3(mp3);
 
                 //     .then( result => {
                 //     })

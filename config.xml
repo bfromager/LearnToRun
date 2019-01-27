@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.ionic.starter" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>LearnToRun</name>
+<widget id="io.ionic.bastok.learn-to-run" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Learn To Run</name>
     <description>Learn to Run</description>
     <author email="bastok@bastok.fr" href="http://www.bastok.fr">Bastok</author>
     <content src="index.html" />
