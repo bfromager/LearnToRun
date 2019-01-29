@@ -15,8 +15,8 @@ const routes: Routes = [
     loadChildren: './pages/debug/debug.module#DebugPageModule'
   },
   {
-    path: 'list',
-    loadChildren: './pages/list/list.module#ListPageModule'
+    path: 'seance-list',
+    loadChildren: './pages/seance/seance-list/seance-list.module#SeanceListPageModule'
   },
   { path: 'playlists', loadChildren: './pages/playlist/playlist-list/playlist-list.module#PlaylistListPageModule' },
 
