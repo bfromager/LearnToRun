@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Storage} from "@ionic/storage";
 import {VocalService} from "../../services/seance/alarm/vocal/vocal.service";
 import {WaveService} from "../../services/seance/alarm/wave/wave.service";
@@ -7,6 +7,8 @@ import {AlarmService, AlarmType} from "../../services/seance/alarm/alarm.service
 import {FractionAlarmService} from "../../services/seance/alarm/fractionAlarm.service";
 import {MediaPlayerService} from "../../services/music/mediaplayer/mediaPlayer.service";
 import {PlaylistsService} from "../../services/music/playlist/playlists/playlists.service";
+import {SeancesService} from '../../services/seance/seances.service';
+import {SeanceComponent} from '../../services/seance/seance.component';
 
 // todo : theming
 // https://angularfirebase.com/lessons/css-variables-in-ionic-4/
@@ -17,7 +19,9 @@ import {PlaylistsService} from "../../services/music/playlist/playlists/playlist
     templateUrl: 'debug.page.html',
     styleUrls: ['debug.page.scss'],
 })
-export class DebugPage {
+export class DebugPage  implements OnInit {
+    @ViewChild(SeanceComponent) seanceComponent: SeanceComponent;
+
 
     constructor(private vocalService: VocalService
         , private waveService: WaveService
@@ -25,10 +29,14 @@ export class DebugPage {
         , private alarm: AlarmService
         , private fractionAlarm: FractionAlarmService
         , private mediaPlayerService: MediaPlayerService
-        , private playlistsService: PlaylistsService
+        // , private playlistsService: PlaylistsService
+        , private seances: SeancesService
         , private storage: Storage
     ) {
+    }
 
+    ngOnInit() {
+        this.seanceComponent.setSeance(this.seances.getSeances()[0]);
     }
 
     btnTextToSpeech() {
