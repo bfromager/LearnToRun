@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Storage} from "@ionic/storage";
 import {VocalService} from "../../services/seance/alarm/vocal/vocal.service";
 import {WaveService} from "../../services/seance/alarm/wave/wave.service";
@@ -9,6 +9,8 @@ import {MediaPlayerService} from "../../services/music/mediaplayer/mediaPlayer.s
 import {PlaylistsService} from "../../services/music/playlist/playlists/playlists.service";
 import {SeancesService} from '../../services/seance/seances/seances.service';
 import {SeanceComponent} from '../../services/seance/components/seance.component';
+import {Subscription} from 'rxjs/index';
+import {Seance} from '../../services/seance/seance';
 
 // todo : theming
 // https://angularfirebase.com/lessons/css-variables-in-ionic-4/
@@ -19,8 +21,9 @@ import {SeanceComponent} from '../../services/seance/components/seance.component
     templateUrl: 'debug.page.html',
     styleUrls: ['debug.page.scss'],
 })
-export class DebugPage  implements OnInit {
+export class DebugPage  implements OnInit, OnDestroy {
     @ViewChild(SeanceComponent) seanceComponent: SeanceComponent;
+    public seancesChangeSub: Subscription;
 
 
     constructor(private vocalService: VocalService
@@ -36,8 +39,24 @@ export class DebugPage  implements OnInit {
     }
 
     ngOnInit() {
-        this.seanceComponent.setSeance(this.seances.getSeances()[0]);
+        console.log("------- DEBUG ngOnInit -------");
+        let seances = this.seances.getSeances();
+        if (seances.length > 0) {
+            this.seanceComponent.setSeance(seances[0]);
+        }
+
+        this.seancesChangeSub =  this.seances.seancesChange.subscribe(
+            (seances: Seance[]) => {
+                this.seanceComponent.setSeance(seances[0]);
+            }
+        );
+
     }
+
+    ngOnDestroy() {
+        this.seancesChangeSub.unsubscribe();
+    }
+
 
     btnTextToSpeech() {
         this.vocalService.speech("Course lente 10 minutes");
@@ -123,26 +142,8 @@ export class DebugPage  implements OnInit {
                 });
     }
     btnTest() {
-        let toto : (string | number)[] = [];
-        toto.push("toto");
-        toto.push(3);
-
-        for (let item of toto) {
-            console.log(item);
-            if (typeof item === "string") {
-                console.log('string')
-            } else {
-                console.log('number')
-            }
-        }
-        // if (typeof toto === "string") {
-        //     console.log('string')
-        // }
-        // toto = 3;
-        // if (typeof toto === "number") {
-        //     console.log('number')
-        // }
-
+        //console.log(this.seances.saveToString());
+        this.seances.save();
     }
 
 }

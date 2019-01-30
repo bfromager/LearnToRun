@@ -42,6 +42,7 @@ export class SeanceComponent implements OnInit, OnDestroy {
 
     public setSeance (seance: Seance) {
         this.seance = seance;
+        console.log("------- setSeance : ", this.seance.getName(), "-------");
         this.initSeance();
     }
 

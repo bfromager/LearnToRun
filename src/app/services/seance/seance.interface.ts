@@ -15,3 +15,9 @@ export interface Bloc {
     items: (Fraction | Bloc) [];
     repeat: number;
 }
+
+
+export interface SeanceInterface {
+    name: string;
+    bloc: Bloc;
+}

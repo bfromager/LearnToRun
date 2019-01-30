@@ -3,6 +3,8 @@ import {Platform} from "@ionic/angular";
 import {Seance, SeanceFactoryService} from "../seance";
 import {AssetService} from "../../files/asset.service";
 import {Storage} from "@ionic/storage";
+import {Bloc, SeanceInterface} from '../seance.interface';
+import {Subject} from 'rxjs/index';
 
 
 @Injectable({
@@ -12,7 +14,7 @@ import {Storage} from "@ionic/storage";
 export class SeancesService {
     private seances : Seance[] = [];
     // private editingPlaylist: Playlist = null;
-    // public playlistsChange: Subject<Playlist[]> = new Subject<Playlist[]>();
+    public seancesChange: Subject<Seance[]> = new Subject<Seance[]>();
 
 
     constructor(private seanceFactoryService: SeanceFactoryService, private storage: Storage, private asset: AssetService) {
@@ -30,23 +32,23 @@ export class SeancesService {
         return this.seances.slice();
     }
 
-    // private saveToString(): string {
-    //     let array = [];
-    //     this.playlists.forEach((playlist) => {
-    //         array.push(playlist.saveToPlaylistInterface());
-    //     });
-    //     return JSON.stringify(array);
-    // }
-    //
-    // private loadFromString(jsonStr: string){
-    //     let array: PlaylistInterface[] = JSON.parse(jsonStr);
-    //     this.playlists = [];
-    //     array.forEach((playlistInterface) => {
-    //         let playlist = this.playlistFactoryService.create();
-    //         playlist.loadFromPlaylistInterface(playlistInterface);
-    //         this.playlists.push(playlist);
-    //     })
-    // }
+    private saveToString(): string {
+        let array = [];
+        this.seances.forEach((seance) => {
+            array.push(seance.saveToInterface());
+        });
+        return JSON.stringify(array);
+    }
+
+    private loadFromString(jsonStr: string){
+        let array: SeanceInterface[] = JSON.parse(jsonStr);
+        this.seances = [];
+        array.forEach((seanceInterface) => {
+            let seance = this.seanceFactoryService.create();
+            seance.loadFromInterface(seanceInterface);
+            this.seances.push(seance);
+        })
+    }
 
     // add(playlistName: string){
     //     let playlist = this.playlistFactoryService.create();
@@ -57,46 +59,47 @@ export class SeancesService {
     //     this.playlistsChange.next(this.playlists.slice());
     // }
 
-    // public save(): Promise<any> {
-    //     return new Promise((resolve, reject) => {
-    //         console.log("Playlists saved");
-    //         // if (this.playlists.length == 0) {
-    //         //     this.storage.remove('playlists')
-    //         //         .catch(()=>{
-    //         //             alert('Impossible de sauvegarder les playlists')
-    //         //         });
-    //         // } else {
-    //         this.storage.set('playlists', this.saveToString())
-    //             .then(() => {
-    //                 resolve();
-    //             })
-    //             .catch(() => {
-    //                 reject('Impossible de sauvegarder les playlists')
-    //             });
-    //         // }
-    //     })
-    // };
+    public save(): Promise<any> {
+        return new Promise((resolve, reject) => {
+            // if (this.playlists.length == 0) {
+            //     this.storage.remove('playlists')
+            //         .catch(()=>{
+            //             alert('Impossible de sauvegarder les playlists')
+            //         });
+            // } else {
+            this.storage.set('seances', this.saveToString())
+                .then(() => {
+                    console.log("Seance saved");
+                    resolve();
+                })
+                .catch(() => {
+                    reject('Impossible de sauvegarder les seances')
+                });
+            // }
+        })
+    };
 
-    // public load(): Promise<any> {
-    public load() {
-        // return new Promise((resolve, reject) => {
-        //     this.storage.get('seances')
-        //         .then((jsonStr) => {
-        //             if (jsonStr != null) {
-        //                 console.log("Seances loaded", jsonStr);
-        //                 this.loadFromString(jsonStr);
-        //                 resolve();
-        //                 // this.playlistsChange.next(this.playlists.slice());
-        //             }
-        //         })
-        //         .catch(
-        //             () => {
-        //                 reject('Impossible de charger les seances');
-        //             });
-        //
-        //     // this.editingPlaylist = this.playlists[0];
-        // })
-        let fakeSeance = this.seanceFactoryService.create();
+    // public load() {
+    public load(): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this.storage.get('seances')
+                .then((jsonStr) => {
+                    if (jsonStr != null) {
+                        this.loadFromString(jsonStr);
+                        console.log("Seances loaded", jsonStr);
+                        resolve();
+                        this.seancesChange.next(this.seances.slice());
+                    }
+                })
+                .catch(
+                    () => {
+                        reject('Impossible de charger les seances');
+                    });
+
+            // this.editingPlaylist = this.playlists[0];
+        })
+
+/*        let fakeSeance = this.seanceFactoryService.create();
 
         fakeSeance.addFraction({type: "Fraction", timeInSecond:5, libelle: "Course lente", waveBegin: this.asset.getWavePath("Alarme.wav")},fakeSeance.getRootBloc());
         fakeSeance.addFraction({type: "Fraction", timeInSecond:2, libelle: "Marche", waveBegin: this.asset.getWavePath("Alarme.wav")},fakeSeance.getRootBloc());
@@ -113,6 +116,7 @@ export class SeancesService {
         fakeSeance.addFraction({type: "Fraction", timeInSecond:3, libelle: "Repeat after", waveBegin: this.asset.getWavePath("Alarme.wav")}, bloc);
 
         this.seances.push(fakeSeance);
+*/
     }
 
 
