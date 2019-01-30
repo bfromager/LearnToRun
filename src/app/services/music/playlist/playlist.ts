@@ -54,7 +54,7 @@ export class Playlist {
         this.list.push(mp3);
     }
     del(index: number) {
-        if (index > -1) {
+        if ((index > -1) && (index < this.list.length)){
             this.list.splice(index, 1);
         }
     }

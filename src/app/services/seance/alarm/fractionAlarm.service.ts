@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {AlarmService, AlarmType} from "./alarm.service";
-import {Fraction} from "../fraction.interface";
+import {Fraction} from "../seance.interface";
 
 @Injectable({
     providedIn: 'root',

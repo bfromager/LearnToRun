@@ -7,8 +7,8 @@ import {AlarmService, AlarmType} from "../../services/seance/alarm/alarm.service
 import {FractionAlarmService} from "../../services/seance/alarm/fractionAlarm.service";
 import {MediaPlayerService} from "../../services/music/mediaplayer/mediaPlayer.service";
 import {PlaylistsService} from "../../services/music/playlist/playlists/playlists.service";
-import {SeancesService} from '../../services/seance/seances.service';
-import {SeanceComponent} from '../../services/seance/seance.component';
+import {SeancesService} from '../../services/seance/seances/seances.service';
+import {SeanceComponent} from '../../services/seance/components/seance.component';
 
 // todo : theming
 // https://angularfirebase.com/lessons/css-variables-in-ionic-4/
@@ -122,4 +122,27 @@ export class DebugPage  implements OnInit {
                     alert('Clear ERROR')
                 });
     }
+    btnTest() {
+        let toto : (string | number)[] = [];
+        toto.push("toto");
+        toto.push(3);
+
+        for (let item of toto) {
+            console.log(item);
+            if (typeof item === "string") {
+                console.log('string')
+            } else {
+                console.log('number')
+            }
+        }
+        // if (typeof toto === "string") {
+        //     console.log('string')
+        // }
+        // toto = 3;
+        // if (typeof toto === "number") {
+        //     console.log('number')
+        // }
+
+    }
+
 }

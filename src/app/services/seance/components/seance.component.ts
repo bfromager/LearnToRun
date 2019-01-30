@@ -1,20 +1,18 @@
 import {Component, OnDestroy, OnInit, ViewChild} from "@angular/core";
-import {CountDownComponent} from "./countdown/countDown.component";
-import {MediaPlayerService} from "../music/mediaplayer/mediaPlayer.service";
-import {PlaylistsService} from "../music/playlist/playlists/playlists.service";
+import {CountDownComponent} from "../countdown/countDown.component";
+import {MediaPlayerService} from "../../music/mediaplayer/mediaPlayer.service";
+import {PlaylistsService} from "../../music/playlist/playlists/playlists.service";
 import {Subscription} from "rxjs/index";
-import {Seance} from "./seance";
-import {SeancesService} from "./seances.service";
-import {Fraction} from "./fraction.interface";
-import {FractionAlarmService} from "./alarm/fractionAlarm.service";
+import {Seance} from "../seance";
+import {Fraction} from "../seance.interface";
+import {FractionAlarmService} from "../alarm/fractionAlarm.service";
 
 @Component({
     selector: 'seance-component',
-    templateUrl: 'seance.component.html',
+    templateUrl: './seance.component.html',
 })
 
 export class SeanceComponent implements OnInit, OnDestroy {
-    // @ViewChild('CountDownComponent') countdown: CountDownComponent;
     @ViewChild(CountDownComponent) countdown: CountDownComponent;
 
     private seance: Seance;
@@ -26,14 +24,10 @@ export class SeanceComponent implements OnInit, OnDestroy {
         private mediaPlayer: MediaPlayerService,
         private alarm: FractionAlarmService,
         private playlists: PlaylistsService,
-        // private seances: SeancesService
     ){
     }
 
     ngOnInit() {
-        // this.seance = this.seances.getSeances()[0];
-        // this.initSeance();
-
         this.countDownSub = this.countdown.event.subscribe(()=>{this.onCountDownEvent();});
     }
 
