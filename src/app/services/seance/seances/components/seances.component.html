@@ -1,0 +1,13 @@
+<ion-list>
+    <ion-item *ngFor="let seance of seances" (click)="itemClick(seance)">
+        <ion-label>
+            <h2>{{seance.getName()}}</h2>
+        </ion-label>
+    </ion-item>
+</ion-list>
+
+<ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="showAlert()">
+        <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+</ion-fab>

@@ -14,16 +14,14 @@ const routes: Routes = [
     path: 'debug',
     loadChildren: './pages/debug/debug.module#DebugPageModule'
   },
-  {
-    path: 'seance-list',
-    loadChildren: './pages/seance/seance-list/seance-list.module#SeanceListPageModule'
-  },
-  { path: 'playlists', loadChildren: './pages/playlist/playlist-list/playlist-list.module#PlaylistListPageModule' },
+  { path: 'seance', loadChildren: './pages/seance/seance.module#SeancePageModule' },
 
+  { path: 'playlists', loadChildren: './pages/playlist/playlist-list/playlist-list.module#PlaylistListPageModule' },
   { path: 'playlist-edit', loadChildren: './pages/playlist/playlist-edit/playlist-edit.module#PlaylistEditPageModule' },
   { path: 'mp3-list', loadChildren: './pages/playlist/mp3-list/mp3-list.module#Mp3ListPageModule' },
-  { path: 'seance', loadChildren: './pages/seance/seance.module#SeancePageModule' }
 
+  { path: 'seance-list', loadChildren: './pages/seance/seance-list/seance-list.module#SeanceListPageModule'  },
+  { path: 'seance-edit', loadChildren: './pages/seance/seance-edit/seance-edit.module#SeanceEditPageModule' }
 
 
 ];

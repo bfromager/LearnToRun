@@ -3,7 +3,7 @@
         <ion-buttons slot="start">
             <ion-back-button></ion-back-button>
         </ion-buttons>
-        <ion-title>{{playlist.getName()}}</ion-title>
+        <ion-title>{{seance.getName()}}</ion-title>
         <ion-buttons slot="end">
             <ion-button (click)="rename()">rename</ion-button>
         </ion-buttons>
@@ -11,6 +11,5 @@
 </ion-header>
 
 <ion-content padding>
-    <!--<ion-button (click)="rename()">rename</ion-button>-->
-    <playlist-edit-component></playlist-edit-component>
+    <seance-edit-component></seance-edit-component>
 </ion-content>

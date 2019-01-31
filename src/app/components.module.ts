@@ -9,6 +9,8 @@ import {SeanceComponent} from "./services/seance/components/seance.component";
 import {PlaylistsComponent} from "./services/music/playlist/playlists/components/playlistsList/playlists.component";
 import {PlaylistPickerComponent} from "./services/music/playlist/playlists/components/picker/playlistPicker.component";
 import {PlaylistEditComponent} from "./services/music/playlist/components/playlistEdit.component";
+import {SeancesComponent} from './services/seance/seances/components/seances.component';
+import {SeanceEditComponent} from './services/seance/components/seanceEdit.component';
 
 @NgModule({
     declarations: [
@@ -19,6 +21,8 @@ import {PlaylistEditComponent} from "./services/music/playlist/components/playli
         MediaPlayerComponent,
         CountDownComponent,
         SeanceComponent,
+        SeancesComponent,
+        SeanceEditComponent,
     ],
     imports: [
         CommonModule,
@@ -32,6 +36,8 @@ import {PlaylistEditComponent} from "./services/music/playlist/components/playli
         MediaPlayerComponent,
         CountDownComponent,
         SeanceComponent,
+        SeancesComponent,
+        SeanceEditComponent,
     ],
 })
 export class ComponentsModule { }

@@ -13,7 +13,7 @@ import {Subject} from 'rxjs/index';
 
 export class SeancesService {
     private seances : Seance[] = [];
-    // private editingPlaylist: Playlist = null;
+    private editingSeance: Seance = null;
     public seancesChange: Subject<Seance[]> = new Subject<Seance[]>();
 
 
@@ -21,12 +21,12 @@ export class SeancesService {
         this.load();
     }
 
-    // getEditingPlaylist(): Playlist {
-    //     return this.editingPlaylist;
-    // }
-    // setEditingPlaylist(playlist:Playlist) {
-    //     this.editingPlaylist = playlist;
-    // }
+    getEditingSeance(): Seance {
+        return this.editingSeance;
+    }
+    setEditingSeance(Seance:Seance) {
+        this.editingSeance = Seance;
+    }
 
     getSeances() {
         return this.seances.slice();
@@ -50,14 +50,14 @@ export class SeancesService {
         })
     }
 
-    // add(playlistName: string){
-    //     let playlist = this.playlistFactoryService.create();
-    //     playlist.setName(playlistName);
-    //     this.editingPlaylist = playlist;
-    //     this.playlists.push(playlist);
-    //     this.save();
-    //     this.playlistsChange.next(this.playlists.slice());
-    // }
+    add(seanceName: string){
+        let seance = this.seanceFactoryService.create();
+        seance.setName(seanceName);
+        this.editingSeance = seance;
+        this.seances.push(seance);
+        this.save();
+        this.seancesChange.next(this.seances.slice());
+    }
 
     public save(): Promise<any> {
         return new Promise((resolve, reject) => {
@@ -96,7 +96,7 @@ export class SeancesService {
                         reject('Impossible de charger les seances');
                     });
 
-            // this.editingPlaylist = this.playlists[0];
+            this.editingSeance = this.seances[0];
         })
 
 /*        let fakeSeance = this.seanceFactoryService.create();
