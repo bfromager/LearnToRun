@@ -1,0 +1,11 @@
+Repeat : {{bloc.repeat}}
+<ion-list lines="none">
+    <!--<ion-reorder-group (ionItemReorder)="reorder($event)" [disabled]="false">-->
+        <ion-item *ngFor="let item of bloc.items">
+            <!--<ion-reorder slot="start"></ion-reorder>-->
+            <fraction-component *ngIf="item.type === 'Fraction'" [fraction]="item"></fraction-component>
+            <bloc-component *ngIf="item.type === 'Bloc'" [bloc]="item"></bloc-component>
+            <!--<ion-button fill="clear" size="large" color="danger" (click)="delMp3(deleted)"><ion-icon name="remove-circle" slot="end"></ion-icon></ion-button>-->
+        </ion-item>
+    <!--</ion-reorder-group>-->
+</ion-list>

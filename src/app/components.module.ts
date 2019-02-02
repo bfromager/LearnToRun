@@ -11,6 +11,8 @@ import {PlaylistPickerComponent} from "./services/music/playlist/playlists/compo
 import {PlaylistEditComponent} from "./services/music/playlist/components/playlistEdit.component";
 import {SeancesComponent} from './services/seance/seances/components/seances.component';
 import {SeanceEditComponent} from './services/seance/components/seanceEdit.component';
+import {BlocComponent} from './services/seance/bloc/bloc.component';
+import {FractionComponent} from './services/seance/fraction/fraction.component';
 
 @NgModule({
     declarations: [
@@ -23,6 +25,8 @@ import {SeanceEditComponent} from './services/seance/components/seanceEdit.compo
         SeanceComponent,
         SeancesComponent,
         SeanceEditComponent,
+        BlocComponent,
+        FractionComponent,
     ],
     imports: [
         CommonModule,
@@ -38,6 +42,8 @@ import {SeanceEditComponent} from './services/seance/components/seanceEdit.compo
         SeanceComponent,
         SeancesComponent,
         SeanceEditComponent,
+        BlocComponent,
+        FractionComponent,
     ],
 })
 export class ComponentsModule { }
