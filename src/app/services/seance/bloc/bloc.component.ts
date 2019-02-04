@@ -9,6 +9,8 @@ import {Bloc} from '../seance.interface';
 
 export class BlocComponent implements OnInit, OnDestroy {
 
+    private nestingColors: string[] = ["#2ba84a","#ee8434","#2b9eb3","#fcab10","#f8333c"];
+
     // private initTimeInSeconds = 4000;
     // private timeInSeconds = 0;
 
@@ -28,6 +30,10 @@ export class BlocComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         // this.stop();
+    }
+
+    getColor() {
+        return this.nestingColors[this.bloc.repeat-1];
     }
 
 }

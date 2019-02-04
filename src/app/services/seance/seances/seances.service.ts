@@ -61,62 +61,71 @@ export class SeancesService {
 
     public save(): Promise<any> {
         return new Promise((resolve, reject) => {
-            // if (this.playlists.length == 0) {
-            //     this.storage.remove('playlists')
-            //         .catch(()=>{
-            //             alert('Impossible de sauvegarder les playlists')
-            //         });
-            // } else {
-            this.storage.set('seances', this.saveToString())
-                .then(() => {
-                    console.log("Seance saved");
-                    resolve();
-                })
-                .catch(() => {
-                    reject('Impossible de sauvegarder les seances')
-                });
-            // }
+            // // if (this.playlists.length == 0) {
+            // //     this.storage.remove('playlists')
+            // //         .catch(()=>{
+            // //             alert('Impossible de sauvegarder les playlists')
+            // //         });
+            // // } else {
+            // this.storage.set('seances', this.saveToString())
+            //     .then(() => {
+            //         console.log("Seance saved");
+            //         resolve();
+            //     })
+            //     .catch(() => {
+            //         reject('Impossible de sauvegarder les seances')
+            //     });
+            // // }
+            resolve();
         })
     };
 
     // public load() {
     public load(): Promise<any> {
         return new Promise((resolve, reject) => {
-            this.storage.get('seances')
-                .then((jsonStr) => {
-                    if (jsonStr != null) {
-                        this.loadFromString(jsonStr);
-                        console.log("Seances loaded", jsonStr);
-                        resolve();
-                        this.seancesChange.next(this.seances.slice());
-                    }
-                })
-                .catch(
-                    () => {
-                        reject('Impossible de charger les seances');
-                    });
+            // this.storage.get('seances')
+            //     .then((jsonStr) => {
+            //         if (jsonStr != null) {
+            //             this.loadFromString(jsonStr);
+            //             console.log("Seances loaded", jsonStr);
+            //             resolve();
+            //             this.seancesChange.next(this.seances.slice());
+            //         }
+            //     })
+            //     .catch(
+            //         () => {
+            //             reject('Impossible de charger les seances');
+            //         });
+
+            let fakeSeance = this.seanceFactoryService.create();
+
+            fakeSeance.addFraction({type: "Fraction", timeInSecond:5, libelle: "Course lente", waveBegin: this.asset.getWavePath("Alarme.wav")},fakeSeance.getRootBloc());
+            fakeSeance.addFraction({type: "Fraction", timeInSecond:2, libelle: "Marche", waveBegin: this.asset.getWavePath("Alarme.wav")},fakeSeance.getRootBloc());
+
+            let bloc = fakeSeance.addBloc(fakeSeance.getRootBloc());
+            bloc.repeat = 3;
+
+            fakeSeance.addFraction({type: "Fraction", timeInSecond:3, libelle: "Repeat before", waveBegin: this.asset.getWavePath("Alarme.wav")}, bloc);
+
+            let subBloc = fakeSeance.addBloc(bloc);
+            subBloc.repeat = 2;
+            fakeSeance.addFraction({type: "Fraction", timeInSecond:5, libelle: "Sub Repeat1 XXXXXXXXXXXXXXXXXXXXXXXXXXXX", waveBegin: this.asset.getWavePath("Alarme.wav")}, subBloc);
+            fakeSeance.addFraction({type: "Fraction", timeInSecond:5, libelle: "Sub Repeat2", waveBegin: this.asset.getWavePath("Alarme.wav")}, subBloc);
+            fakeSeance.addFraction({type: "Fraction", timeInSecond:5, libelle: "Sub Repeat3", waveBegin: this.asset.getWavePath("Alarme.wav")}, subBloc);
+
+            subBloc = fakeSeance.addBloc(bloc);
+            subBloc.repeat = 2;
+            fakeSeance.addFraction({type: "Fraction", timeInSecond:5, libelle: "Sub Repeat1", waveBegin: this.asset.getWavePath("Alarme.wav")}, subBloc);
+            fakeSeance.addFraction({type: "Fraction", timeInSecond:5, libelle: "Sub Repeat2", waveBegin: this.asset.getWavePath("Alarme.wav")}, subBloc);
+
+            fakeSeance.addFraction({type: "Fraction", timeInSecond:3, libelle: "Repeat after", waveBegin: this.asset.getWavePath("Alarme.wav")}, bloc);
+
+            this.seances.push(fakeSeance);
 
             this.editingSeance = this.seances[0];
+            resolve();
         })
 
-/*        let fakeSeance = this.seanceFactoryService.create();
-
-        fakeSeance.addFraction({type: "Fraction", timeInSecond:5, libelle: "Course lente", waveBegin: this.asset.getWavePath("Alarme.wav")},fakeSeance.getRootBloc());
-        fakeSeance.addFraction({type: "Fraction", timeInSecond:2, libelle: "Marche", waveBegin: this.asset.getWavePath("Alarme.wav")},fakeSeance.getRootBloc());
-
-        let bloc = fakeSeance.addBloc(fakeSeance.getRootBloc());
-        bloc.repeat = 3;
-
-        fakeSeance.addFraction({type: "Fraction", timeInSecond:3, libelle: "Repeat before", waveBegin: this.asset.getWavePath("Alarme.wav")}, bloc);
-
-        let subBloc = fakeSeance.addBloc(bloc);
-        subBloc.repeat = 2;
-        fakeSeance.addFraction({type: "Fraction", timeInSecond:5, libelle: "Sub Repeat", waveBegin: this.asset.getWavePath("Alarme.wav")}, subBloc);
-
-        fakeSeance.addFraction({type: "Fraction", timeInSecond:3, libelle: "Repeat after", waveBegin: this.asset.getWavePath("Alarme.wav")}, bloc);
-
-        this.seances.push(fakeSeance);
-*/
     }
 
 
