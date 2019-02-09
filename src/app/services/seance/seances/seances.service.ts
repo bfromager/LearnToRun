@@ -103,18 +103,18 @@ export class SeancesService {
             fakeSeance.addFraction({type: "Fraction", timeInSecond:2, libelle: "Marche", waveBegin: this.asset.getWavePath("Alarme.wav")},fakeSeance.getRootBloc());
 
             let bloc = fakeSeance.addBloc(fakeSeance.getRootBloc());
-            bloc.repeat = 3;
+            bloc.repeat = 2;
 
             fakeSeance.addFraction({type: "Fraction", timeInSecond:3, libelle: "Repeat before", waveBegin: this.asset.getWavePath("Alarme.wav")}, bloc);
 
             let subBloc = fakeSeance.addBloc(bloc);
-            subBloc.repeat = 2;
+            subBloc.repeat = 3;
             fakeSeance.addFraction({type: "Fraction", timeInSecond:5, libelle: "Sub Repeat1 XXXXXXXXXXXXXXXXXXXXXXXXXXXX", waveBegin: this.asset.getWavePath("Alarme.wav")}, subBloc);
             fakeSeance.addFraction({type: "Fraction", timeInSecond:5, libelle: "Sub Repeat2", waveBegin: this.asset.getWavePath("Alarme.wav")}, subBloc);
             fakeSeance.addFraction({type: "Fraction", timeInSecond:5, libelle: "Sub Repeat3", waveBegin: this.asset.getWavePath("Alarme.wav")}, subBloc);
 
             subBloc = fakeSeance.addBloc(bloc);
-            subBloc.repeat = 2;
+            subBloc.repeat = 3;
             fakeSeance.addFraction({type: "Fraction", timeInSecond:5, libelle: "Sub Repeat1", waveBegin: this.asset.getWavePath("Alarme.wav")}, subBloc);
             fakeSeance.addFraction({type: "Fraction", timeInSecond:5, libelle: "Sub Repeat2", waveBegin: this.asset.getWavePath("Alarme.wav")}, subBloc);
 

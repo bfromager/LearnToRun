@@ -14,6 +14,7 @@ export interface Bloc {
     type: "Bloc";
     items: (Fraction | Bloc) [];
     repeat: number;
+    nesting: number;
 }
 
 

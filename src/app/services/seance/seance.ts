@@ -22,7 +22,8 @@ export class Seance {
     private bloc: Bloc = {
         type: "Bloc",
         items: [],
-        repeat: 1
+        repeat: 1,
+        nesting: 0
     }
 
     private fractions: Fraction[] = [];
@@ -68,7 +69,8 @@ export class Seance {
         let result: Bloc = {
             type: "Bloc",
             items: [],
-            repeat: 1
+            repeat: 1,
+            nesting: bloc.nesting + 1
         }
         bloc.items.push(result);
         return result;
@@ -89,7 +91,7 @@ export class Seance {
         console.log (this.name);
         let seanceInterface: SeanceInterface = {
             name: this.name,
-            bloc: this.bloc,
+            bloc: this.bloc
         };
         return seanceInterface;
     }
